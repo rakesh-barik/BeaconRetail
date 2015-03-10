@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.tavant.beaconretail.model.DrawerMenuItem;
 import com.tavant.beaconretail.model.ProductManager;
+import com.tavant.beaconretail.proximity.ProximityMarketing;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,8 @@ public class LandingActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ProximityMarketing app = (ProximityMarketing)getApplication();
+        app.startProximityMarketing();
         setActionBarIcon(R.drawable.ic_ab_drawer);
         toggleToolbarToDrawer();
 
