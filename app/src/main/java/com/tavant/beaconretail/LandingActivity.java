@@ -1,5 +1,6 @@
 package com.tavant.beaconretail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -10,6 +11,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.tavant.beaconretail.model.DrawerMenuItem;
@@ -45,6 +47,11 @@ public class LandingActivity extends BaseActivity {
         mProductListAdapter = new ProductListAdapter(ProductManager.getInstance().getProducts(),R.layout.product_row,this);
         mRecyclerView.setAdapter(mProductListAdapter);
 
+        initializeMenu();
+
+    }
+
+    private void initializeMenu() {
         drawerMenuItemList = new ArrayList<DrawerMenuItem>();
         for(int i = 0; i < titles.length; i++){
             DrawerMenuItem item = new DrawerMenuItem(images[i],titles[i]);
@@ -54,7 +61,31 @@ public class LandingActivity extends BaseActivity {
         mDrawerMenuList = (ListView)findViewById(R.id.menu_list);
         MenuListAdapter menuListAdapter = new MenuListAdapter(this, drawerMenuItemList);
         mDrawerMenuList.setAdapter(menuListAdapter);
+        mDrawerMenuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                
+                loadSelectedScreen(position);
+            }
+        });
+    }
 
+    private void loadSelectedScreen(int position) {
+        Intent intent = new Intent(this,OffersActivity.class);
+        switch (position){
+            case 0:
+                break;
+            case 1:
+                startActivity(intent);
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+
+            default:
+                break;
+        }
     }
 
     private void toggleToolbarToDrawer() {
