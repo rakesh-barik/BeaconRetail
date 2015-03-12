@@ -46,11 +46,11 @@ public class ProximityMarketing extends Application{
 	      @Override
 	      public void onEnteredRegion(Region region, List<Beacon> beacons) {
               for(Beacon beacon : beacons){
-                  if (beacon.getMinor() == BeaconUtility.ENTRY_MINOR){
+                  if (beacon.getMinor() == getResources().getInteger(R.integer.entry_minor)){
                       postNotification(getString(R.string.welcome_msg),ENTRY_NOTIFICATION_ID);
-                  }else if(beacon.getMinor() == BeaconUtility.MEN_MINOR){
+                  }else if(beacon.getMinor() == getResources().getInteger(R.integer.men_minor)){
                       postNotification(getString(R.string.men_section_msg),MEN_NOTIFICATION_ID);
-                  }else if(beacon.getMinor() == BeaconUtility.WOMEN_MINOR){
+                  }else if(beacon.getMinor() == getResources().getInteger(R.integer.women_minor)){
                       postNotification(getString(R.string.women_section_msg), WOMEN_NOTIFICATION_ID);
                   }
               }
