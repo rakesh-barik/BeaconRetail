@@ -8,7 +8,7 @@ import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
 import com.estimote.sdk.BeaconManager.MonitoringListener;
-import com.tavant.beaconretail.OffersActivity;
+import com.tavant.beaconretail.LandingActivity;
 import com.tavant.beaconretail.R;
 
 import android.app.Application;
@@ -94,7 +94,7 @@ public class ProximityMarketing extends Application{
 	}
 	
 	private void postNotification(String msg,int notificationId) {
-		    Intent notifyIntent = new Intent(ProximityMarketing.this, OffersActivity.class);
+		    Intent notifyIntent = new Intent(ProximityMarketing.this, LandingActivity.class);
 		    notifyIntent.putExtra("Offer", msg);
 		    notifyIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             Random random = new Random();

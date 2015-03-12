@@ -17,16 +17,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:id="@+id/root_container">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:layout_marginTop="?android:attr/actionBarSize"
-            tools:context=".LandingActivity"
-            />
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/list"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@color/white"-->
+            <!--android:layout_marginTop="?android:attr/actionBarSize"-->
+            <!--tools:context=".LandingActivity"-->
+            <!--/>-->
 
     </RelativeLayout>
 

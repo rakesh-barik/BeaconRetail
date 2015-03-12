@@ -2,6 +2,8 @@ package com.tavant.beaconretail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -40,13 +42,7 @@ public class LandingActivity extends BaseActivity {
         app.startProximityMarketing();
         setActionBarIcon(R.drawable.ic_ab_drawer);
         toggleToolbarToDrawer();
-
-        mRecyclerView = (RecyclerView)findViewById(R.id.list);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mProductListAdapter = new ProductListAdapter(ProductManager.getInstance().getProducts(),R.layout.product_row,this);
-        mRecyclerView.setAdapter(mProductListAdapter);
-
+        loadFragment(new ProductFragment());
         initializeMenu();
 
     }
@@ -71,16 +67,20 @@ public class LandingActivity extends BaseActivity {
     }
 
     private void loadSelectedScreen(int position) {
-        Intent intent = new Intent(this,OffersActivity.class);
         switch (position){
             case 0:
+                loadFragment(new ProductFragment());
+                drawerLayout.closeDrawers();
                 break;
             case 1:
-                startActivity(intent);
+                loadFragment(new OffersFragment());
+                drawerLayout.closeDrawers();
                 break;
             case 2:
+                drawerLayout.closeDrawers();
                 break;
             case 3:
+                drawerLayout.closeDrawers();
                 break;
 
             default:
@@ -132,5 +132,11 @@ public class LandingActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void loadFragment(Fragment fragment){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.root_container, fragment);
+        transaction.commit();
     }
 }
