@@ -46,15 +46,12 @@ public class ProximityMarketing extends Application{
 	      @Override
 	      public void onEnteredRegion(Region region, List<Beacon> beacons) {
               for(Beacon beacon : beacons){
-                  if (beacon.getMinor() == 59688){
-                      //entry beacon detected
-                      postNotification("Welcome to Tavant Retail Store",ENTRY_NOTIFICATION_ID);
-                  }else if(beacon.getMinor() == 39431){
-                      //men section beacon detected
-                      postNotification("We have exciting offers for you in Men section",MEN_NOTIFICATION_ID);
-                  }else if(beacon.getMinor() == 41861){
-                      //women section beacon detected
-                      postNotification("We have exciting offers for you in Women section", WOMEN_NOTIFICATION_ID);
+                  if (beacon.getMinor() == BeaconUtility.ENTRY_MINOR){
+                      postNotification(getString(R.string.welcome_msg),ENTRY_NOTIFICATION_ID);
+                  }else if(beacon.getMinor() == BeaconUtility.MEN_MINOR){
+                      postNotification(getString(R.string.men_section_msg),MEN_NOTIFICATION_ID);
+                  }else if(beacon.getMinor() == BeaconUtility.WOMEN_MINOR){
+                      postNotification(getString(R.string.women_section_msg), WOMEN_NOTIFICATION_ID);
                   }
               }
 
@@ -62,14 +59,25 @@ public class ProximityMarketing extends Application{
 
 	      @Override
 	      public void onExitedRegion(Region region) {
-            if(region.getMinor() == 59688)
-	        postNotification("Thanks for visiting Tavant Retail Store",EXIT_NOTIFICATION_ID);
+            if(region.getMinor() == getResources().getInteger(R.integer.entry_minor))
+	        postNotification(getString(R.string.exit_msg),EXIT_NOTIFICATION_ID);
 	      }
 	    });
 		
-	    entryRegion         = new Region("entryId", "b9407f30-f5f8-466e-aff9-25556b57fe6d", 64990, 59688);
-	    menSectionRegion    = new Region("menSectionBeacon", "b9407f30-f5f8-466e-aff9-25556b57fe6d", 32673, 39431);
-        womenSectionRegion  = new Region("WomenSectionBeacon", "b9407f30-f5f8-466e-aff9-25556b57fe6d", 36164, 41861);
+	    entryRegion         = new Region(getString(R.string.entry_beacon),
+                                        getString(R.string.beacon_uuid),
+                                        getResources().getInteger(R.integer.entry_major),
+                                        getResources().getInteger(R.integer.entry_minor));
+
+	    menSectionRegion    = new Region(getString(R.string.men_section_beacon),
+                                        getString(R.string.beacon_uuid),
+                                        getResources().getInteger(R.integer.men_major),
+                                        getResources().getInteger(R.integer.men_minor));
+
+        womenSectionRegion  = new Region(getString(R.string.women_section_beacon),
+                                        getString(R.string.beacon_uuid),
+                                        getResources().getInteger(R.integer.women_major),
+                                        getResources().getInteger(R.integer.women_minor));
 
 	    //notificationManager.cancel(NOTIFICATION_ID);
 	    beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
@@ -100,9 +108,9 @@ public class ProximityMarketing extends Application{
             Random random = new Random();
 		    PendingIntent pendingIntent = PendingIntent.getActivities(
 		    		ProximityMarketing.this,
-		        random.nextInt(),
+		        0,
 		        new Intent[]{notifyIntent},
-		        PendingIntent.FLAG_UPDATE_CURRENT);
+		        PendingIntent.FLAG_ONE_SHOT);
 		    Notification notification = new Notification.Builder(ProximityMarketing.this)
 		        .setSmallIcon(R.drawable.beacon_gray)
 		        .setContentTitle("Tavant Retail")

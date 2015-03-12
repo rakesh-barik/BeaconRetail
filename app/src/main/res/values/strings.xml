@@ -8,4 +8,17 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!--MESSAGES FOR NOTIFICATIONS-->
+    <string name="beacon_uuid">b9407f30-f5f8-466e-aff9-25556b57fe6d</string>
+    <string name="welcome_msg">Welcome to Tavant Retail Store!</string>
+    <string name="exit_msg">Thanks for visiting Tavant Retail Store!</string>
+    <string name="men_section_msg">We have exciting offers for you in Men section</string>
+    <string name="women_section_msg">We have exciting offers for you in Women section</string>
+
+    <!--beacon id-->
+    <string name="entry_beacon">entryBeacon</string>
+    <string name="men_section_beacon">menSectionBeacon</string>
+    <string name="women_section_beacon">womenSectionBeacon</string>
 </resources>

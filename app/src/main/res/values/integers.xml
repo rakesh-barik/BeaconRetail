@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="entry_major">5813</integer>
+    <integer name="entry_minor">506</integer>
+
+    <integer name="men_major">32673</integer>
+    <integer name="men_minor">39431</integer>
+
+    <integer name="women_major">36164</integer>
+    <integer name="women_minor">41861</integer>
+    
+</resources>
