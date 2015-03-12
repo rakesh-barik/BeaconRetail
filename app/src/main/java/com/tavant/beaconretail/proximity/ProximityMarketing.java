@@ -103,7 +103,7 @@ public class ProximityMarketing extends Application{
 	
 	private void postNotification(String msg,int notificationId) {
 		    Intent notifyIntent = new Intent(ProximityMarketing.this, LandingActivity.class);
-		    notifyIntent.putExtra("Offer", msg);
+		    notifyIntent.putExtra("Section", "Men's Section");
 		    notifyIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             Random random = new Random();
 		    PendingIntent pendingIntent = PendingIntent.getActivities(

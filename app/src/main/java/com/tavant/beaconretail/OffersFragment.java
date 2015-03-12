@@ -20,6 +20,7 @@ import com.tavant.beaconretail.model.ProductManager;
 public class OffersFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private ProductListAdapter mProductListAdapter;
+    private String sectionIdentifier;
 
     public OffersFragment() {
         // Required empty public constructor
@@ -30,11 +31,19 @@ public class OffersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.offers_fragment, container, false);
+        Bundle args = getArguments();
+        if(args!=null){
+            sectionIdentifier = args.getString("identifier");
+        }
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mProductListAdapter = new ProductListAdapter(ProductManager.getInstance().getProducts(), R.layout.product_row, getActivity());
+        if(sectionIdentifier!=null)
+            mProductListAdapter = new ProductListAdapter(ProductManager.getInstance().getProductsforWomen(), R.layout.product_row, getActivity());
+        else
+            mProductListAdapter = new ProductListAdapter(ProductManager.getInstance().getProducts(), R.layout.product_row, getActivity());
         mRecyclerView.setAdapter(mProductListAdapter);
+
         return rootView;
     }
 

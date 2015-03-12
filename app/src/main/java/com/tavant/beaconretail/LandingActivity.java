@@ -42,7 +42,12 @@ public class LandingActivity extends BaseActivity {
         app.startProximityMarketing();
         setActionBarIcon(R.drawable.ic_ab_drawer);
         toggleToolbarToDrawer();
-        loadFragment(new ProductFragment());
+        String componentIdentifier = getIntent().getStringExtra("Section");
+        //Finally has to handle multiple beacon ids and has to open respective components
+        if(componentIdentifier != null)
+            loadFragment(new OffersFragment(), componentIdentifier);
+        else
+            loadFragment(new ProductFragment(), null);
         initializeMenu();
 
     }
@@ -69,11 +74,11 @@ public class LandingActivity extends BaseActivity {
     private void loadSelectedScreen(int position) {
         switch (position){
             case 0:
-                loadFragment(new ProductFragment());
+                loadFragment(new ProductFragment(), null);
                 drawerLayout.closeDrawers();
                 break;
             case 1:
-                loadFragment(new OffersFragment());
+                loadFragment(new OffersFragment(), null);
                 drawerLayout.closeDrawers();
                 break;
             case 2:
@@ -134,7 +139,22 @@ public class LandingActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void loadFragment(Fragment fragment){
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String componentIdentifier = intent.getStringExtra("Section");
+        if(componentIdentifier != null)
+            loadFragment(new OffersFragment(), componentIdentifier);
+        else
+            loadFragment(new ProductFragment(), null);
+    }
+
+    public void loadFragment(Fragment fragment, String componentIdentifier){
+        if(componentIdentifier != null){
+            Bundle args = new Bundle();
+            args.putString("identifier", componentIdentifier);
+            fragment.setArguments(args);
+        }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.root_container, fragment);
         transaction.commit();
