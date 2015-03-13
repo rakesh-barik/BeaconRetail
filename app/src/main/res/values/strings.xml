@@ -22,4 +22,5 @@
     <string name="entry_beacon">entryBeacon</string>
     <string name="men_section_beacon">menSectionBeacon</string>
     <string name="women_section_beacon">womenSectionBeacon</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>

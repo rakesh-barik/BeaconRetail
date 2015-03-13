@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tavant.beaconretail.LoginActivity"
+    android:background="@drawable/splash"
+    >
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="username"
+        android:textColorHint="@color/material_orange_300"
+        android:id="@+id/editText"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/material_orange_300"
+        android:layout_above="@+id/editText2"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="password"
+        android:textColorHint="@color/material_orange_300"
+        android:id="@+id/editText2"
+        android:textColor="@color/material_orange_300"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:layout_above="@+id/button"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="15dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="LOGIN"
+        android:background="@color/material_orange_500"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+         />
+</RelativeLayout>
