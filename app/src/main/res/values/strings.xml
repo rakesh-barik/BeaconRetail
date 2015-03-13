@@ -18,6 +18,7 @@
     <string name="women_section_msg">We have exciting offers for you in Women section</string>
 
     <!--beacon id-->
+    <string name="main_entrance_beacon">mainEntranceBeacon</string>
     <string name="entry_beacon">entryBeacon</string>
     <string name="men_section_beacon">menSectionBeacon</string>
     <string name="women_section_beacon">womenSectionBeacon</string>
