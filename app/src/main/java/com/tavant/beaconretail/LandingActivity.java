@@ -1,5 +1,7 @@
 package com.tavant.beaconretail;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +11,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,7 +69,7 @@ public class LandingActivity extends BaseActivity {
         mDrawerMenuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                
+
                 loadSelectedScreen(position);
             }
         });
@@ -125,6 +129,7 @@ public class LandingActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_landing, menu);
+
         return true;
     }
 
@@ -134,6 +139,8 @@ public class LandingActivity extends BaseActivity {
             case android.R.id.home:
                 drawerLayout.openDrawer(Gravity.START);
                 return true;
+            case R.id.action_search:
+                startActivity(new Intent(this, SearchActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
