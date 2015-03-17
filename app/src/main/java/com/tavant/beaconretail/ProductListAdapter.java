@@ -38,7 +38,9 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         Product product = mProductList.get(position);
         holder.productName.setText(product.name);
         holder.productImage.setImageDrawable(mContext.getResources().getDrawable(product.getImageResourceId(mContext)));
-
+        holder.productDescription.setText(product.description);
+        holder.productSize.setText(product.size);
+        holder.productPrice.setText(product.price);
     }
 
     @Override
@@ -48,13 +50,20 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView productName;
         public ImageView productImage;
+        public TextView productName;
+        public TextView productDescription;
+        public TextView productSize;
+        public TextView productPrice;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
             productName = (TextView) itemView.findViewById(R.id.productName);
             productImage = (ImageView)itemView.findViewById(R.id.productImage);
+            productDescription = (TextView) itemView.findViewById(R.id.productDescription);
+            productSize = (TextView) itemView.findViewById(R.id.productSize);
+            productPrice = (TextView) itemView.findViewById(R.id.productPrice);
         }
     }
 }

@@ -48,7 +48,7 @@ public class ProximityMarketing extends Application {
                 for (Beacon beacon : beacons) {
                     if (beacon.getMinor() == getResources().getInteger(R.integer.main_entrance_minor)) {
                         if(userEntryCheck.isInsidePremise() && userEntryCheck.isAtEntry()){
-                            postNotification(getString(R.string.exit_msg), EXIT_NOTIFICATION_ID);
+                            postNotification(getString(R.string.exit_msg), EXIT_NOTIFICATION_ID, null);
                         }
                         userEntryCheck.setInsidePremise(true);
                         userEntryCheck.setAtEntry(false);
@@ -56,19 +56,19 @@ public class ProximityMarketing extends Application {
                         userEntryCheck.setAtWomenSection(false);
                     } else if (beacon.getMinor() == getResources().getInteger(R.integer.entry_minor)) {
                         if (userEntryCheck.isShowWelcomeMsg() && userEntryCheck.isInsidePremise() && !userEntryCheck.isAtEntry()) {
-                            postNotification(getString(R.string.welcome_msg), ENTRY_NOTIFICATION_ID);
+                            postNotification(getString(R.string.welcome_msg), ENTRY_NOTIFICATION_ID,getResources().getString(R.string.general_offer) );
                             userEntryCheck.setShowWelcomeMsg(false);
                             userEntryCheck.setAtEntry(true);
                         }
                     } else if (beacon.getMinor() == getResources().getInteger(R.integer.men_minor)) {
                         if (userEntryCheck.isShowMenSectionMsg() && userEntryCheck.isAtEntry()) {
-                            postNotification(getString(R.string.men_section_msg), MEN_NOTIFICATION_ID);
+                            postNotification(getString(R.string.men_section_msg), MEN_NOTIFICATION_ID,getResources().getString(R.string.men_section_offer));
                             userEntryCheck.setShowMenSectionMsg(false);
                             userEntryCheck.setAtMenSection(true);
                         }
                     } else if (beacon.getMinor() == getResources().getInteger(R.integer.women_minor)) {
                         if (userEntryCheck.isShowWomenSectionMsg() && userEntryCheck.isAtEntry()) {
-                            postNotification(getString(R.string.women_section_msg), WOMEN_NOTIFICATION_ID);
+                            postNotification(getString(R.string.women_section_msg), WOMEN_NOTIFICATION_ID,getResources().getString(R.string.women_section_offer));
                             userEntryCheck.setShowWomenSectionMsg(false);
                             userEntryCheck.setAtWomenSection(true);
                         }
@@ -126,15 +126,15 @@ public class ProximityMarketing extends Application {
         return beaconManager;
     }
 
-    private void postNotification(String msg, int notificationId) {
+    private void postNotification(String msg, int notificationId,String section) {
         Intent notifyIntent = new Intent(ProximityMarketing.this, LandingActivity.class);
-        notifyIntent.putExtra("Section", "Men's Section");
+        notifyIntent.putExtra("Section", section);
         notifyIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivities(
                 ProximityMarketing.this,
                 0,
                 new Intent[]{notifyIntent},
-                PendingIntent.FLAG_ONE_SHOT);
+                PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = new Notification.Builder(ProximityMarketing.this)
                 .setSmallIcon(R.drawable.beacon_gray)
                 .setContentTitle("Tavant Retail")

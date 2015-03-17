@@ -9,6 +9,8 @@ public class Product {
     public String name;
     public String description;
     public String imageName;
+    public String price;
+    public String size;
 
     public int getImageResourceId(Context context)
     {

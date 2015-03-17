@@ -38,10 +38,14 @@ public class OffersFragment extends Fragment {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        if(sectionIdentifier!=null)
+        if(sectionIdentifier == null || sectionIdentifier.equals(getResources().getString(R.string.general_offer))){
+            mProductListAdapter = new ProductListAdapter(ProductManager.getInstance().getGeneralOffer(), R.layout.product_row, getActivity());
+        }
+        else if(sectionIdentifier.equals(getResources().getString(R.string.women_section_offer))) {
             mProductListAdapter = new ProductListAdapter(ProductManager.getInstance().getProductsforWomen(), R.layout.product_row, getActivity());
-        else
-            mProductListAdapter = new ProductListAdapter(ProductManager.getInstance().getProducts(), R.layout.product_row, getActivity());
+        }else if(sectionIdentifier.equals(getResources().getString(R.string.men_section_offer))) {
+            mProductListAdapter = new ProductListAdapter(ProductManager.getInstance().getProductsforMen(), R.layout.product_row, getActivity());
+        }
         mRecyclerView.setAdapter(mProductListAdapter);
 
         return rootView;
