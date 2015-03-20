@@ -1,6 +1,7 @@
 package com.tavant.beaconretail.proximity;
 
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import com.estimote.sdk.Beacon;
@@ -130,11 +131,12 @@ public class ProximityMarketing extends Application {
         Intent notifyIntent = new Intent(ProximityMarketing.this, LandingActivity.class);
         notifyIntent.putExtra("Section", section);
         notifyIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        Random random = new Random();
         PendingIntent pendingIntent = PendingIntent.getActivities(
                 ProximityMarketing.this,
-                0,
+                random.nextInt(),
                 new Intent[]{notifyIntent},
-                PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent.FLAG_ONE_SHOT);
         Notification notification = new Notification.Builder(ProximityMarketing.this)
                 .setSmallIcon(R.drawable.beacon_gray)
                 .setContentTitle("Tavant Retail")

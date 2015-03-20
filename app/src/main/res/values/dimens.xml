@@ -11,4 +11,12 @@
     <dimen name="product_description">18sp</dimen>
     <dimen name="product_size">20sp</dimen>
     <dimen name="product_price">22sp</dimen>
+    
+    <!--Offer screen items sizes-->
+    <dimen name="user_name">26sp</dimen>
+    <dimen name="hi">18sp</dimen>
+    <dimen name="welcome">20sp</dimen>
+    <dimen name="section">20sp</dimen>
+    <dimen name="offer">32sp</dimen>
+    <dimen name="off">55sp</dimen>
 </resources>

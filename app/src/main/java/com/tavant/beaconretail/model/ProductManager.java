@@ -9,8 +9,8 @@ import java.util.List;
  */
 public class ProductManager {
     private static String[] generalProductArray = {"Shoe1", "Shoe11", "jacket", "pant", "phone", "jacket2","Shoe11","Shoe12","Shoe13","Shoe14","jacket","jacket2","tshirt"};
-    private static String[] offerForWomenArray  = {"Shoe11","Shoe12","Shoe13","Shoe14"};
-    private static String[] offerForMenArray    = {"jacket","jacket2","tshirt"};
+    private static String[] offerForWomenArray  = {"womenoffer"};
+    private static String[] offerForMenArray    = {"menoffer"};
     private static String[] generalOfferArray = {"Shoe1", "jacket", "pant", "phone", "jacket2","Shoe14","jacket"};
     private static String   loremIpsum          = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut " +
             "labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea " +
@@ -33,21 +33,14 @@ public class ProductManager {
 
     public List<Product> getProducts() {
         if (products == null) {
-            products = new ArrayList<Product>();
-
-            for (String productName : generalProductArray) {
-                Product product = new Product();
-                product.name = productName;
-                product.description = loremIpsum;
-                product.price = "2500";
-                product.size = "S - XL";
-                product.imageName = productName.replaceAll("\\s+","").toLowerCase();
-                products.add(product);
-            }
+            return null;
+        }else {
+           return products;
         }
 
-        return products;
+
     }
+
 
     //Using duplicate method to return different set of products for now
     public List<Product> getProductsforWomen() {
@@ -56,9 +49,9 @@ public class ProductManager {
 
             for (String productName : offerForWomenArray) {
                 Product product = new Product();
-                product.name = productName;
-                product.description = loremIpsum;
-                product.imageName = productName.replaceAll("\\s+","").toLowerCase();
+                product.setName(productName);
+                product.setDescription(loremIpsum);
+                product.setImageName(productName.replaceAll("\\s+","").toLowerCase());
                 productsforWomen.add(product);
             }
         }
@@ -73,9 +66,9 @@ public class ProductManager {
 
             for (String productName : offerForMenArray) {
                 Product product = new Product();
-                product.name = productName;
-                product.description = loremIpsum;
-                product.imageName = productName.replaceAll("\\s+","").toLowerCase();
+                product.setName(productName);
+                product.setDescription(loremIpsum);
+                product.setImageName(productName.replaceAll("\\s+","").toLowerCase());
                 productsforMen.add(product);
             }
         }
@@ -90,9 +83,9 @@ public class ProductManager {
 
             for (String productName : generalOfferArray) {
                 Product product = new Product();
-                product.name = productName;
-                product.description = loremIpsum;
-                product.imageName = productName.replaceAll("\\s+","").toLowerCase();
+                product.setName(productName);
+                product.setDescription(loremIpsum);
+                product.setImageName(productName.replaceAll("\\s+","").toLowerCase());
                 generalOffer.add(product);
             }
         }
@@ -100,4 +93,19 @@ public class ProductManager {
         return generalOffer;
     }
 
+    public void setProducts(List<Product> productList) {
+        if (products == null) {
+            products = new ArrayList<>();
+
+            for(Product downloadedProduct : productList){
+                for (String productName : generalProductArray) {
+
+                    downloadedProduct.setImageName(productName.replaceAll("\\s+", "").toLowerCase());
+
+                }
+
+                products.add(downloadedProduct);
+            }
+        }
+    }
 }
