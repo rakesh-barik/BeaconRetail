@@ -5,7 +5,11 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="1dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="6dp"
+    card_view:cardElevation="2sp"
+    card_view:cardUseCompatPadding="true"
     android:clickable="true"
     card_view:cardCornerRadius="2dp"
     >
@@ -19,23 +23,25 @@
             android:layout_width="100dp"
             android:layout_height="120dp"
             android:scaleType="fitCenter"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
         />
 
         <TextView
             android:id="@+id/productName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/product_title"
+            android:textSize="@dimen/medium"
             android:textColor="@android:color/black"
             android:layout_toRightOf="@id/productImage"
+            android:layout_alignTop="@id/productImage"
             tools:text="Apex Bionic Jacket"
             />
         <TextView
             android:id="@+id/productDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/product_description"
+            android:textSize="@dimen/small"
             android:textColor="@color/material_grey_600"
             android:maxLines="3"
             android:ellipsize="end"
@@ -43,13 +49,27 @@
             android:layout_below="@id/productName"
             tools:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut"
             />
+
+        <TextView
+            android:id="@+id/sizeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/micro"
+            android:textColor="@color/material_red_700"
+            android:text="@string/size_title"
+            tools:text="Size : "
+            android:layout_toRightOf="@id/productImage"
+            android:layout_below="@id/productDescription"
+
+
+            />
         <TextView
             android:id="@+id/productSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/product_size"
+            android:textSize="@dimen/micro"
             android:textColor="@color/material_red_700"
-            android:layout_toRightOf="@id/productImage"
+            android:layout_toRightOf="@id/sizeTitle"
             android:layout_below="@id/productDescription"
             tools:text="Size S - XL"/>
 
@@ -59,13 +79,15 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:textColor="@color/material_blue_700"
-            android:textSize="@dimen/product_price"
+            android:textSize="@dimen/medium"
             android:layout_below="@id/productSize"
+            android:layout_alignBaseline="@id/productImage"
+            android:layout_alignRight="@id/productImage"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             tools:text="2500"
 
-            />
+            android:layout_alignEnd="@id/productImage" />
 
 
     </RelativeLayout>

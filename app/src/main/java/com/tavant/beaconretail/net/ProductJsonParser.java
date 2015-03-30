@@ -43,7 +43,7 @@ public class ProductJsonParser {
                 product.setPrice(jsonObject.getString(PRODUCT_PRICE));
                 product.setSize(jsonObject.getString(PRODUCT_SIZE));
                 product.setSectionId(jsonObject.getInt(SECTION_ID));
-                product.setBeaconId(jsonObject.getInt(BEACON_ID));
+                product.setBeaconId(jsonObject.getString(BEACON_ID));
                 productsList.add(product);
             } catch (JSONException e) {
                 e.printStackTrace();

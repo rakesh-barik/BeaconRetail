@@ -12,7 +12,7 @@ public class Product implements Parcelable {
 
     private int id;
     private int sectionId;
-    private int beaconId;
+    private String beaconId;
 
     private String name;
     private String description;
@@ -25,7 +25,7 @@ public class Product implements Parcelable {
     private Product(Parcel in){
         this.id = in.readInt();
         this.sectionId = in.readInt();
-        this.beaconId = in.readInt();
+        this.beaconId = in.readString();
 
         this.name = in.readString();
         this.description = in.readString();
@@ -50,11 +50,11 @@ public class Product implements Parcelable {
         this.sectionId = sectionId;
     }
 
-    public int getBeaconId() {
+    public String getBeaconId() {
         return beaconId;
     }
 
-    public void setBeaconId(int beaconId) {
+    public void setBeaconId(String beaconId) {
         this.beaconId = beaconId;
     }
 
@@ -135,7 +135,7 @@ public class Product implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeInt(sectionId);
-        dest.writeInt(beaconId);
+        dest.writeString(beaconId);
         dest.writeString(name);
         dest.writeString(description);
         dest.writeString(imageName);

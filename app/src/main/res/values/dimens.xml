@@ -13,10 +13,19 @@
     <dimen name="product_price">22sp</dimen>
     
     <!--Offer screen items sizes-->
-    <dimen name="user_name">26sp</dimen>
+    <dimen name="user_name">18sp</dimen>
     <dimen name="hi">18sp</dimen>
     <dimen name="welcome">20sp</dimen>
     <dimen name="section">20sp</dimen>
     <dimen name="offer">32sp</dimen>
     <dimen name="off">55sp</dimen>
+    <dimen name="top_margin_row">10dp</dimen>
+    
+    <!--A standard typographic scale defined by google-->
+    
+    <dimen name="micro">12sp</dimen>
+    <dimen name="small">14sp</dimen>
+    <dimen name="medium">18sp</dimen>
+    <dimen name="large">22sp</dimen>
+    <dimen name="product_list_top_margin">150dp</dimen>
 </resources>

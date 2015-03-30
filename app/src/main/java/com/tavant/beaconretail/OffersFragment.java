@@ -5,6 +5,7 @@ import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,18 +17,22 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.tavant.beaconretail.model.Offer;
+import com.tavant.beaconretail.model.Product;
 import com.tavant.beaconretail.model.ProductManager;
+import com.tavant.beaconretail.net.OfferJsonParser;
 import com.tavant.beaconretail.net.VolleySingleton;
 
 import org.json.JSONArray;
+import org.w3c.dom.Text;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OffersFragment extends Fragment {
+public class OffersFragment extends Fragment implements OfferListAdapter.ItemClickListener{
     private RecyclerView mRecyclerView;
-    private ProductListAdapter mProductListAdapter;
+    private OfferListAdapter mProductListAdapter;
     private String sectionIdentifier;
 
     public OffersFragment() {
@@ -43,26 +48,37 @@ public class OffersFragment extends Fragment {
         if (args != null) {
             sectionIdentifier = args.getString("identifier");
         }
+        getOffersFromServer();
 
+        rootView = getRootView(inflater, container, rootView);
+
+        return rootView;
+    }
+
+    private View getRootView(LayoutInflater inflater, ViewGroup container, View rootView) {
         if (sectionIdentifier == null || sectionIdentifier.equals(getResources().getString(R.string.general_offer))) {
             rootView = inflater.inflate(R.layout.offers_fragment, container, false);
             mRecyclerView = (RecyclerView) rootView.findViewById(R.id.list);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
             mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-            mProductListAdapter = new ProductListAdapter(ProductManager.getInstance().getGeneralOffer(), R.layout.product_row, getActivity());
-            mRecyclerView.setAdapter(mProductListAdapter);
+           /* mProductListAdapter = new OfferListAdapter(ProductManager.getInstance().getGeneralOffer(), R.layout.offer_row,this, getActivity());
+            mRecyclerView.setAdapter(mProductListAdapter);*/
         } else if (sectionIdentifier.equals(getResources().getString(R.string.women_section_offer))) {
             rootView = inflater.inflate(R.layout.offer_row, container, false);
-            ImageView productImage = (ImageView) rootView.findViewById(R.id.productImage);
-            productImage.setImageResource(R.drawable.womenoffer);
-            TextView offerForWomen = (TextView) rootView.findViewById(R.id.offer_for);
-            offerForWomen.setText("Pick Women's shoe at");
+            ImageView offerImage = (ImageView) rootView.findViewById(R.id.offerImage);
+            offerImage.setImageResource(R.drawable.womenoffer);
+            TextView userName = (TextView) rootView.findViewById(R.id.offerDescription);
+            userName.setText("Hi! Martina");
+            /*TextView offerForWomen = (TextView) rootView.findViewById(R.id.offer_for);
+            offerForWomen.setText("Pick Women's shoe at");*/
         } else if (sectionIdentifier.equals(getResources().getString(R.string.men_section_offer))) {
             rootView = inflater.inflate(R.layout.offer_row, container, false);
-            ImageView productImage = (ImageView) rootView.findViewById(R.id.productImage);
-            productImage.setImageResource(R.drawable.menoffer);
-            TextView offerForMen = (TextView) rootView.findViewById(R.id.offer_for);
-            offerForMen.setText("Pick Men's shoe at");
+            ImageView offerImage = (ImageView) rootView.findViewById(R.id.offerImage);
+            offerImage.setImageResource(R.drawable.menoffer);
+            TextView userName = (TextView) rootView.findViewById(R.id.offerDescription);
+            userName.setText("Hi! John Andrew");
+            /*TextView offerForMen = (TextView) rootView.findViewById(R.id.offer_for);
+            offerForMen.setText("Pick Men's shoe at");*/
         }
         return rootView;
     }
@@ -71,6 +87,12 @@ public class OffersFragment extends Fragment {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(getResources().getString(R.string.offer_url), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                new OfferJsonParser(response);
+
+                if (sectionIdentifier == null || sectionIdentifier.equals(getResources().getString(R.string.general_offer))) {
+                mProductListAdapter = new OfferListAdapter(ProductManager.getInstance().getGeneralOffer(), R.layout.offer_row,OffersFragment.this, getActivity());
+                mRecyclerView.setAdapter(mProductListAdapter);
+                }
 
             }
         }, new Response.ErrorListener() {
@@ -82,4 +104,9 @@ public class OffersFragment extends Fragment {
         VolleySingleton.getInstance(getActivity()).addToRequestQueue(jsonArrayRequest);
     }
 
+
+    @Override
+    public void itemClicked(Offer offer) {
+
+    }
 }

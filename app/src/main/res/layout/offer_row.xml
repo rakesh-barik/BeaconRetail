@@ -1,69 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:layout_height="300dp"
+    android:layout_margin="1dp"
+    android:clickable="true"
     android:orientation="vertical"
-    android:weightSum="100">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="70"
-    android:orientation="vertical"
-    >
-    <TextView
-        android:id="@+id/name_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Hi! John Andrew"
-        android:layout_marginTop="60dp"
-        android:textColor="@color/material_blue_grey_800"
-        android:textSize="@dimen/user_name" />
-
-    <TextView
-        android:id="@+id/welcome_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Welcome to Tavant Retail Master"
-        android:textColor="@color/material_blue_grey_800"
-        android:textSize="@dimen/welcome" />
-
+    card_view:cardCornerRadius="2dp">
     <ImageView
-        android:id="@+id/productImage"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_centerHorizontal="true"
+            android:id="@+id/offerImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/jacket" />
 
-        android:src="@drawable/menoffer" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@color/material_teal_500">
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/offerDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="@dimen/small"
+                    android:text="Rodid Full Sleeve Solid Men's.." />
 
+                <TextView
+                    android:id="@+id/offerPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/offerDescription"
+                    android:layout_below="@id/offerDescription"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/medium"
+                    android:text="Rs.699" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="30"
-        android:orientation="vertical"
-        android:background="@color/material_red_500">
+                <TextView
+                    android:id="@+id/actualPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/offerDescription"
+                    android:layout_below="@id/offerPrice"
+                    android:background="@drawable/strike"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:textSize="@dimen/micro"
+                    android:text="Rs.2249" />
 
-        <TextView
-            android:id="@+id/offer_for"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pick Men's shoes at"
-            android:layout_gravity="center_horizontal"
-            android:textSize="@dimen/section"
-            android:layout_marginTop="30dp"
-            android:textColor="@android:color/white"/>
+                <TextView
+                    android:id="@+id/discountPercentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/offerPrice"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/actualPrice"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:textSize="@dimen/micro"
+                    android:text="68% OFF" />
+            </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="50%Off"
-            android:layout_gravity="center_horizontal"
-            android:textSize="@dimen/off"
-            android:textColor="@android:color/white"/>
-    </LinearLayout>
-</LinearLayout>
+</android.support.v7.widget.CardView>

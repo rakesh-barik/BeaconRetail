@@ -12,6 +12,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.Menu;
@@ -48,10 +49,12 @@ public class LandingActivity extends BaseActivity {
         toggleToolbarToDrawer();
         String componentIdentifier = getIntent().getStringExtra("Section");
         //Finally has to handle multiple beacon ids and has to open respective components
-        if(componentIdentifier != null)
+        if(componentIdentifier != null){
             loadFragment(new OffersFragment(), componentIdentifier);
-        else
+        }
+        else {
             loadFragment(new ProductFragment(), null);
+        }
         initializeMenu();
 
     }
@@ -165,5 +168,9 @@ public class LandingActivity extends BaseActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.root_container, fragment);
         transaction.commit();
+    }
+
+    public Toolbar getToolBar(){
+        return toolbar;
     }
 }
