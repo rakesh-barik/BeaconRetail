@@ -32,23 +32,41 @@ public class MenuListAdapter extends ArrayAdapter<DrawerMenuItem> {
         ViewHolder viewHolder = null;
         DrawerMenuItem drawerMenuItem = getItem(position);
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if(convertView == null){
-            convertView = inflater.inflate(R.layout.menu_row,null);
-            viewHolder = new ViewHolder();
-            viewHolder.imageView = (ImageView)convertView.findViewById(R.id.image_thumbnail);
-            viewHolder.textView = (TextView)convertView.findViewById(R.id.tv_menu_item);
+        if (convertView == null) {
+            if (position == 0) {
+                convertView = inflater.inflate(R.layout.menu_header, null);
+                viewHolder = new ViewHolder();
+                viewHolder.profileImageView = (ImageView) convertView.findViewById(R.id.profile_image);
+                viewHolder.txtUserName = (TextView) convertView.findViewById(R.id.user_name);
+                viewHolder.txtMailId = (TextView) convertView.findViewById(R.id.email_id);
+            } else {
+                convertView = inflater.inflate(R.layout.menu_row, null);
+                viewHolder = new ViewHolder();
+                viewHolder.imageView = (ImageView) convertView.findViewById(R.id.image_thumbnail);
+                viewHolder.textView = (TextView) convertView.findViewById(R.id.tv_menu_item);
+            }
             convertView.setTag(viewHolder);
-        }else{
+
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        if (position == 0) {
+            viewHolder.profileImageView.setImageResource(R.drawable.profile_icon);
+            viewHolder.txtUserName.setText("Tavant");
+            viewHolder.txtMailId.setText("tav1blr@gmail.com");
+        } else {
             viewHolder.textView.setText(drawerMenuItem.getTitle());
             viewHolder.imageView.setImageResource(drawerMenuItem.getImageId());
+        }
 
         return convertView;
     }
 
-    private class ViewHolder{
+    private class ViewHolder {
         ImageView imageView;
         TextView textView;
+        ImageView profileImageView;
+        TextView txtUserName;
+        TextView txtMailId;
     }
 }

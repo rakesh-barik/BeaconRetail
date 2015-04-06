@@ -27,5 +27,6 @@
     <dimen name="small">14sp</dimen>
     <dimen name="medium">18sp</dimen>
     <dimen name="large">22sp</dimen>
+    <dimen name="x_large">30sp</dimen>
     <dimen name="product_list_top_margin">150dp</dimen>
 </resources>

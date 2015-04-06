@@ -1,20 +1,71 @@
 package com.tavant.beaconretail;
 
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.NavUtils;
+import android.support.v4.content.IntentCompat;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.tavant.beaconretail.model.Product;
+import com.squareup.picasso.Picasso;
 
 
-public class ProductDetailActivity extends BaseActivity {
+public class ProductDetailActivity extends BaseActivity implements View.OnClickListener {
     public static final String ARG_ITEM = "ARG_ITEM";
+    public static final String PACKAGE = "com.tavant.beaconretail";
+
+    public static final String EXTRA_IMAGE = "DetailActivity:image";
+    private ImageView mImageView;
+    private TextView mTextView;
+    private Button sizeSix,sizeSeven,sizeEight,sizeNine,sizeTen;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Product product = (Product)getIntent().getSerializableExtra(ARG_ITEM);
+        toolbar.setBackground(getResources().getDrawable(R.color.primary));
+        mImageView = (ImageView)findViewById(R.id.productImage);
+        mTextView = (TextView)findViewById(R.id.text);
+
+        initializeButtons();
+
+        ViewCompat.setTransitionName(mImageView, EXTRA_IMAGE);
+        Picasso.with(this).load(getIntent().getStringExtra(EXTRA_IMAGE)).into(mImageView);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateUpToFromChild(ProductDetailActivity.this, IntentCompat.makeMainActivity(new ComponentName(ProductDetailActivity.this, LandingActivity.class)));
+            }
+        });
+        //Product product = (Product)getIntent().getSerializableExtra(ARG_ITEM);
+
+
+    }
+
+    private void initializeButtons() {
+        sizeSix     = (Button)findViewById(R.id.size_six);
+        sizeSeven   = (Button)findViewById(R.id.size_seven);
+        sizeEight   = (Button)findViewById(R.id.size_eight);
+        sizeNine    = (Button)findViewById(R.id.size_nine);
+        sizeTen     = (Button)findViewById(R.id.size_ten);
+
+        sizeSix.setOnClickListener(this);
+        sizeSeven.setOnClickListener(this);
+        sizeEight.setOnClickListener(this);
+        sizeNine.setOnClickListener(this);
+        sizeTen.setOnClickListener(this);
+
     }
 
     @Override
@@ -42,6 +93,66 @@ public class ProductDetailActivity extends BaseActivity {
             return true;
         }
 
+        if(id == android.R.id.home){
+            NavUtils.navigateUpFromSameTask(this);
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    public static void launch(ProductFragment activity, View transitionView, String url) {
+        ActivityOptionsCompat options =
+                ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        activity.getActivity(), transitionView, EXTRA_IMAGE);
+        Intent intent = new Intent(activity.getActivity(), ProductDetailActivity.class);
+        intent.putExtra(EXTRA_IMAGE, url);
+        ActivityCompat.startActivity(activity.getActivity(), intent, options.toBundle());
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.size_six:
+                v.setBackgroundColor(getResources().getColor(R.color.material_blue_A200));
+                sizeSeven.setBackgroundColor(getResources().getColor(R.color.white));
+                sizeEight.setBackgroundColor(getResources().getColor(R.color.white));
+                sizeNine.setBackgroundColor(getResources().getColor(R.color.white));
+                sizeTen.setBackgroundColor(getResources().getColor(R.color.white));
+
+                break;
+            case R.id.size_seven:
+                v.setBackgroundColor(getResources().getColor(R.color.material_blue_A200));
+                sizeSix.setBackgroundColor(getResources().getColor(R.color.white));
+                sizeEight.setBackgroundColor(getResources().getColor(R.color.white));
+                sizeNine.setBackgroundColor(getResources().getColor(R.color.white));
+                sizeTen.setBackgroundColor(getResources().getColor(R.color.white));
+
+                break;
+            case R.id.size_eight:
+                v.setBackgroundColor(getResources().getColor(R.color.material_blue_A200));
+                sizeSix.setBackgroundColor(getResources().getColor(R.color.white));
+                sizeSeven.setBackgroundColor(getResources().getColor(R.color.white));
+                sizeNine.setBackgroundColor(getResources().getColor(R.color.white));
+                sizeTen.setBackgroundColor(getResources().getColor(R.color.white));
+
+                break;
+            case R.id.size_nine:
+                v.setBackgroundColor(getResources().getColor(R.color.material_blue_A200));
+                sizeSix.setBackgroundColor(getResources().getColor(R.color.white));
+                sizeSeven.setBackgroundColor(getResources().getColor(R.color.white));
+                sizeEight.setBackgroundColor(getResources().getColor(R.color.white));
+                sizeTen.setBackgroundColor(getResources().getColor(R.color.white));
+
+                break;
+            case R.id.size_ten:
+                v.setBackgroundColor(getResources().getColor(R.color.material_blue_A200));
+                sizeSix.setBackgroundColor(getResources().getColor(R.color.white));
+                sizeSeven.setBackgroundColor(getResources().getColor(R.color.white));
+                sizeEight.setBackgroundColor(getResources().getColor(R.color.white));
+                sizeNine.setBackgroundColor(getResources().getColor(R.color.white));
+
+                break;
+
+        }
     }
 }

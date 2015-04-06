@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sizeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_below="@id/sizeTitle"
+    android:layout_marginLeft="10dp"
+    tools:showIn="@layout/activity_product_detail">
+
+    <Button
+        android:id="@+id/size_six"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="3dp"
+        android:background="@color/white"
+        android:textColor="@android:color/black"
+        android:text="6"/>
+
+    <Button
+        android:id="@+id/size_seven"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="3dp"
+        android:background="@android:color/white"
+        android:textColor="@color/material_blue_grey_300"
+        android:enabled="false"
+        android:text="7" />
+
+    <Button
+        android:id="@+id/size_eight"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="3dp"
+        android:background="@android:color/white"
+        android:textColor="@android:color/black"
+        android:text="8" />
+
+    <Button
+        android:id="@+id/size_nine"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="3dp"
+        android:background="@android:color/white"
+        android:textColor="@android:color/black"
+        android:text="9" />
+
+    <Button
+        android:id="@+id/size_ten"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="3dp"
+        android:background="@android:color/white"
+        android:textColor="@android:color/black"
+        android:text="10" />
+
+</LinearLayout>

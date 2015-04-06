@@ -7,8 +7,9 @@
     android:id="@+id/list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="?android:attr/actionBarSize"
-    android:background="@color/white"
+    android:background="@color/background"
     />
-
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
 </FrameLayout>

@@ -17,6 +17,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -137,8 +140,12 @@ public class ProximityMarketing extends Application {
                 random.nextInt(),
                 new Intent[]{notifyIntent},
                 PendingIntent.FLAG_ONE_SHOT);
+        Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                R.drawable.shopping);
         Notification notification = new Notification.Builder(ProximityMarketing.this)
-                .setSmallIcon(R.drawable.beacon_gray)
+                .setSmallIcon(R.drawable.retail_notif)
+                .setStyle(new Notification.BigPictureStyle()
+                .bigPicture(icon))
                 .setContentTitle("Tavant Retail")
                 .setContentText(msg)
                 .setAutoCancel(true)

@@ -1,22 +1,152 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.tavant.beaconretail.ProductDetailActivity">
-
-    <RelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:layout_marginTop="?android:attr/actionBarSize">
-    <ImageView
+        tools:context="com.tavant.beaconretail.ProductDetailActivity">
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/menoffer"/>
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?android:attr/actionBarSize"
+            android:background="@color/white"
+            tools:context="com.tavant.beaconretail.ProductDetailActivity">
 
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/productImage"
+                android:layout_width="400dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                android:scaleType="centerCrop"
+                android:transitionName="photo_hero" />
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/productImage"
+                android:background="@color/material_blue_grey_300" />
 
-</FrameLayout>
+            <TextView
+                android:id="@+id/productName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/divider"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Nike Air Cage Court Running Shoes"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/medium" />
+
+            <TextView
+                android:id="@+id/productSection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/productName"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="Sports shoe for men"
+                android:textColor="@color/material_grey_600"
+                android:textSize="@dimen/micro" />
+
+            <TextView
+                android:id="@+id/productPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/productSection"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:text="690"
+                android:textColor="@color/material_blue_500"
+                android:textSize="@dimen/x_large" />
+
+            <View
+                android:id="@+id/second_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/productSection"
+                android:background="@color/material_blue_grey_300" />
+
+            <TextView
+                android:id="@+id/sizeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/second_divider"
+                android:layout_margin="10dp"
+                android:text="@string/size_title"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/medium" />
+
+            <include layout="@layout/sizes_layout" />
+
+            <TextView
+                android:id="@+id/colorTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/sizeLayout"
+                android:layout_margin="10dp"
+                android:text="@string/color_title"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/medium" />
+
+            <include layout="@layout/colors_layout" />
+
+            <TextView
+                android:id="@+id/descriptionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/colorLayout"
+                android:layout_margin="10dp"
+                android:text="@string/description_title"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/medium" />
+
+            <TextView
+                android:id="@+id/product_desc_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/colorLayout"
+                android:layout_margin="10dp"
+                android:text="@string/description_title"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/medium" />
+
+            <TextView
+                android:id="@+id/product_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/product_desc_title"
+                android:layout_margin="10dp"
+                android:text="@string/description_text"
+                android:textColor="@color/material_grey_600"
+                android:textSize="@dimen/small" />
+
+            <TextView
+                android:id="@+id/recommendation_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/product_desc"
+                android:layout_margin="10dp"
+                android:text="@string/recommendation_text"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/medium" />
+
+            <fragment android:name="com.tavant.beaconretail.RecommendationFragment"
+                android:id="@+id/recommendation"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_below="@id/recommendation_title"
+                />
+
+
+        </RelativeLayout>
+</ScrollView>
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+        />
+
+    </FrameLayout>

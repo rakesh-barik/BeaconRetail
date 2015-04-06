@@ -2,19 +2,13 @@ package com.tavant.beaconretail;
 
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.Pair;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +21,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.poliveira.parallaxrecyclerview.HeaderLayoutManagerFixed;
 import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
+import com.squareup.picasso.Picasso;
 import com.tavant.beaconretail.model.Product;
 import com.tavant.beaconretail.model.ProductManager;
 import com.tavant.beaconretail.net.ProductJsonParser;
@@ -37,20 +32,22 @@ import org.json.JSONArray;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter.OnClickEvent{
+public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter.OnClickEvent, ParallaxRecyclerAdapter.OnParallaxScroll{
     private RecyclerView mRecyclerView;
     private ParallaxRecyclerAdapter adapter;
+    private Toolbar mToolbar;
+    private BaseActivity activity;
 
     public ProductFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.product_fragment, container, false);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.list);
+        mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -96,13 +93,16 @@ public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter
         adapter.setParallaxHeader(header, mRecyclerView);
         adapter.setData(ProductManager.getInstance().getProducts());
         adapter.setOnClickEvent(ProductFragment.this);
+        adapter.setOnParallaxScroll(ProductFragment.this);
         adapter.implementRecyclerAdapterMethods(new ParallaxRecyclerAdapter.RecyclerAdapterMethods() {
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
                 final Product product = (Product) adapter.getData().get(i);
                 if (product.getName() != null)
                     ((ProductViewHolder) viewHolder).setProductName(product.getName());
-                ((ProductViewHolder) viewHolder).productImage.setImageDrawable(getActivity().getResources().getDrawable(product.getImageResourceId(getActivity())));
+
+                ((ProductViewHolder) viewHolder).setProductImage(getActivity().getResources().getString(R.string.image_url) + String.valueOf(i + 1));
+
                 if (product.getDescription() != null)
                     ((ProductViewHolder) viewHolder).setProductDescription(product.getDescription());
                 if (product.getSize() != null)
@@ -131,17 +131,25 @@ public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter
     }
 
 
-    public void itemClicked(Product product) {
-        Intent detailIntent = new Intent(getActivity(), ProductDetailActivity.class);
-        detailIntent.putExtra(ProductDetailActivity.ARG_ITEM, product);
-        startActivity(detailIntent);
+    public void itemClicked(View v,Product product) {
+        View imageView = v.findViewById(R.id.productImage);
+        String url = (String) imageView.getTag();
+        ProductDetailActivity.launch(this,imageView,url);
     }
 
     @Override
     public void onClick(View v, int position) {
         if (position != -1) {
-           itemClicked((Product) adapter.getData().get(position));
+           itemClicked(v,(Product) adapter.getData().get(position));
         }
+    }
+
+    @Override
+    public void onParallaxScroll(float percentage, float offset, View parallax) {
+
+        Drawable c = mToolbar.getBackground();
+        c.setAlpha(Math.round(percentage * 255));
+        mToolbar.setBackground(getActivity().getResources().getDrawable(R.color.primary));
     }
 
     public static final class ProductViewHolder extends RecyclerView.ViewHolder {
@@ -174,7 +182,11 @@ public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter
 
 
         public void setProductImage(String productImageUrl) {
-            //this.productImage.setImageDrawable(mContext.getResources().getDrawable(product.getImageResourceId(mContext)));;
+
+            Picasso.with(this.parent.getContext())
+                    .load(productImageUrl)
+                    .into(productImage);
+            this.productImage.setTag(productImageUrl);
         }
 
 

@@ -24,7 +24,7 @@
     <color name="black_semi_transparent">#B2000000</color>
     <color name="background">#e5e5e5</color>
     <color name="half_black">#808080</color>
-    <color name="white">#fafafa</color>
+    <color name="white">#ffffffff</color>
     <color name="white_pressed">#f1f1f1</color>
     <color name="pink">#e91e63</color>
     <color name="pink_pressed">#ec407a</color>
@@ -178,4 +178,7 @@
     <color name="timepicker_default_disabled_color_material">@color/bright_foreground_disabled_material_dark</color>
     <color name="timepicker_default_ampm_selected_background_color_material">@color/material_light_blue_A200</color>
     <color name="timepicker_default_selector_color_material">@color/material_light_blue_A200</color>
+
+
+    <color name="size_color">#33b5e5</color>
 </resources>

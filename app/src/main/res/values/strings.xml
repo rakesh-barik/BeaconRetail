@@ -8,6 +8,7 @@
 
     <string name="rupees">\u20B9</string>
 
+    <string name="image_url">http://lorempixel.com/400/200/sports/</string>
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -40,5 +41,10 @@
     <string name="feed_url">http://192.168.139.26:8080/beaconretail/products</string>
     <string name="offer_url">http://192.168.139.26:8080/beaconretail/offers</string>
     <string name="title_activity_product_detail">ProductDetailActivity</string>
-    <string name="size_title">Size :</string>
+
+    <string name="size_title">Size</string>
+    <string name="color_title">Colors</string>
+    <string name="description_title">Description</string>
+    <string name="description_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Lorem ipsum dolor sit amet</string>
+    <string name="recommendation_text">Recommendation</string>
 </resources>
