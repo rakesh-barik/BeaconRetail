@@ -18,8 +18,11 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.tavant.beaconretail.proximity.ProximityMarketing;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by rakesh.barik on 05-03-2015.
@@ -73,12 +76,16 @@ public abstract class BaseActivity extends ActionBarActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.offer_popup);
         ImageView offerImage = (ImageView)dialog.findViewById(R.id.offerImage);
+        TextView offerDescription = (TextView)dialog.findViewById(R.id.offerDescription);
         if(section.equals(context.getResources().getString(R.string.women_section_offer))){
             offerImage.setImageResource(R.drawable.womenoffer);
+            offerDescription.setText("Pick Women's shoes at");
         }else if (section.equals(context.getResources().getString(R.string.men_section_offer))) {
             offerImage.setImageResource(R.drawable.menoffer);
+            offerDescription.setText("Pick Men's shoes at");
         }else if (section.equals(context.getResources().getString(R.string.general_offer))) {
             offerImage.setImageResource(R.drawable.offer_for_men);
+            offerDescription.setText("Pick Men's shoes at");
         }
         dialog.show();
     }
