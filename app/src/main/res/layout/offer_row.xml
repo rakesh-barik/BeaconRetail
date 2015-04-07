@@ -4,23 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_margin="10dp"
     android:clickable="true"
     android:orientation="vertical"
     card_view:cardElevation="2dp"
-    card_view:cardCornerRadius="2dp">
+    card_view:cardCornerRadius="2dp"
+    android:background="@color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/white">
+        android:layout_gravity="bottom">
 
         <ImageView
             android:id="@+id/offerImage"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_margin="10dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/background"
             android:src="@drawable/jacket"
             android:scaleType="centerCrop"/>
 

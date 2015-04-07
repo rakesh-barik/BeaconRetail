@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -48,6 +49,7 @@ public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter
         View rootView = inflater.inflate(R.layout.product_fragment, container, false);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.list);
         mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("Beacon Retails");
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
