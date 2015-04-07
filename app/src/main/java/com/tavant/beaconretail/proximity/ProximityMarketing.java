@@ -8,10 +8,12 @@ import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
 import com.estimote.sdk.BeaconManager.MonitoringListener;
+import com.tavant.beaconretail.BaseActivity;
 import com.tavant.beaconretail.LandingActivity;
 import com.tavant.beaconretail.R;
 
 import android.app.Application;
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -21,7 +23,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.RemoteException;
+import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 public class ProximityMarketing extends Application {
 
@@ -36,6 +46,10 @@ public class ProximityMarketing extends Application {
     private static final int EXIT_NOTIFICATION_ID = 012;
     private static final String TAG = "ProximityMarketing";
 
+    @Override
+    public void onCreate() {
+        registerActivityLifecycleCallbacks(new ForeGroundCheck());
+    }
 
     public void startProximityMarketing() {
         if (isProxyShoppingRunning)
@@ -45,6 +59,7 @@ public class ProximityMarketing extends Application {
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         beaconManager.setBackgroundScanPeriod(TimeUnit.SECONDS.toMillis(1), 0);
+
         final UserEntryCheck userEntryCheck = UserEntryCheck.getInstance();
         beaconManager.setMonitoringListener(new MonitoringListener() {
             @Override
@@ -52,7 +67,11 @@ public class ProximityMarketing extends Application {
                 for (Beacon beacon : beacons) {
                     if (beacon.getMinor() == getResources().getInteger(R.integer.main_entrance_minor)) {
                         if(userEntryCheck.isInsidePremise() && userEntryCheck.isAtEntry()){
-                            postNotification(getString(R.string.exit_msg), EXIT_NOTIFICATION_ID, null);
+                            if(ForeGroundCheck.isApplicationInForeground()){
+                                BaseActivity.showPopUp(getResources().getString(R.string.general_offer));
+                            }else{
+                                postNotification(getString(R.string.exit_msg), EXIT_NOTIFICATION_ID, null);
+                            }
                         }
                         userEntryCheck.setInsidePremise(true);
                         userEntryCheck.setAtEntry(false);
@@ -60,19 +79,33 @@ public class ProximityMarketing extends Application {
                         userEntryCheck.setAtWomenSection(false);
                     } else if (beacon.getMinor() == getResources().getInteger(R.integer.entry_minor)) {
                         if (userEntryCheck.isShowWelcomeMsg() && userEntryCheck.isInsidePremise() && !userEntryCheck.isAtEntry()) {
-                            postNotification(getString(R.string.welcome_msg), ENTRY_NOTIFICATION_ID,getResources().getString(R.string.general_offer) );
+                            if(ForeGroundCheck.isApplicationInForeground()){
+                                BaseActivity.showPopUp(getResources().getString(R.string.general_offer));
+                                Toast.makeText(getApplicationContext(),"You have awesome offers.WELCOME",Toast.LENGTH_SHORT).show();
+                            }else{
+                                postNotification(getString(R.string.welcome_msg), ENTRY_NOTIFICATION_ID,getResources().getString(R.string.general_offer) );
+                            }
                             userEntryCheck.setShowWelcomeMsg(false);
                             userEntryCheck.setAtEntry(true);
                         }
                     } else if (beacon.getMinor() == getResources().getInteger(R.integer.men_minor)) {
                         if (userEntryCheck.isShowMenSectionMsg() && userEntryCheck.isAtEntry()) {
-                            postNotification(getString(R.string.men_section_msg), MEN_NOTIFICATION_ID,getResources().getString(R.string.men_section_offer));
+                            if(ForeGroundCheck.isApplicationInForeground()){
+                                BaseActivity.showPopUp(getResources().getString(R.string.men_section_offer));
+                            }else{
+                                postNotification(getString(R.string.men_section_msg), MEN_NOTIFICATION_ID,getResources().getString(R.string.men_section_offer));
+                            }
                             userEntryCheck.setShowMenSectionMsg(false);
                             userEntryCheck.setAtMenSection(true);
                         }
                     } else if (beacon.getMinor() == getResources().getInteger(R.integer.women_minor)) {
                         if (userEntryCheck.isShowWomenSectionMsg() && userEntryCheck.isAtEntry()) {
-                            postNotification(getString(R.string.women_section_msg), WOMEN_NOTIFICATION_ID,getResources().getString(R.string.women_section_offer));
+                            if(ForeGroundCheck.isApplicationInForeground()){
+                                BaseActivity.showPopUp(getResources().getString(R.string.women_section_offer));
+                                Toast.makeText(getApplicationContext(),"You have awesome offers.WOMEN SECTION",Toast.LENGTH_SHORT).show();
+                            }else{
+                                postNotification(getString(R.string.women_section_msg), WOMEN_NOTIFICATION_ID,getResources().getString(R.string.women_section_offer));
+                            }
                             userEntryCheck.setShowWomenSectionMsg(false);
                             userEntryCheck.setAtWomenSection(true);
                         }
@@ -126,6 +159,8 @@ public class ProximityMarketing extends Application {
 
     }
 
+
+
     public BeaconManager getBeaconManager() {
         return beaconManager;
     }
@@ -155,4 +190,5 @@ public class ProximityMarketing extends Application {
         notification.defaults |= Notification.DEFAULT_LIGHTS;
         notificationManager.notify(notificationId, notification);
     }
+
 }
