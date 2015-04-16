@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -49,7 +50,16 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         });
 
         initializeButtons();
+        fabButtonAction();
+    }
 
+    private void fabButtonAction() {
+        findViewById(R.id.cart_icon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ProductDetailActivity.this, "Item Added to Cart", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initializeButtons() {

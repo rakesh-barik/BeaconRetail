@@ -1,10 +1,11 @@
 package com.tavant.beaconretail;
 
 
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+//import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +30,9 @@ import com.tavant.beaconretail.net.ProductJsonParser;
 import com.tavant.beaconretail.net.VolleySingleton;
 
 import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,7 +60,7 @@ public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter
         if (ProductManager.getInstance().getProducts() == null) {
             getProductsFromServer();
         } else {
-            createCardAdapter();
+            createCardAdapter(ProductManager.getInstance().getProducts());
         }
         return rootView;
     }
@@ -69,7 +73,7 @@ public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter
                     VolleyLog.v("Response :%n %s", response.toString());
                     new ProductJsonParser(response);
 
-                    createCardAdapter();
+                    createCardAdapter(ProductManager.getInstance().getProducts());
 
 
                 } catch (Exception e) {
@@ -85,7 +89,19 @@ public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter
         VolleySingleton.getInstance(getActivity()).addToRequestQueue(request);
     }
 
-    private void createCardAdapter() {
+    public void setFromSearch(String queryText){
+        if(ProductManager.getInstance().getProducts() != null){
+            List<Product> searchedProduct = new ArrayList<Product>();
+            for(Product product : ProductManager.getInstance().getProducts()){
+                if(product.getName().contains(queryText)){
+                    searchedProduct.add(product);
+                }
+            }
+            createCardAdapter(searchedProduct);
+        }
+    }
+
+    private void createCardAdapter(List<Product> products) {
         adapter = new ParallaxRecyclerAdapter(ProductManager.getInstance().getProducts());
         HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
         mRecyclerView.setLayoutManager(layoutManagerFixed);
@@ -93,7 +109,7 @@ public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter
         layoutManagerFixed.setHeaderIncrementFixer(header);
         adapter.setShouldClipView(false);
         adapter.setParallaxHeader(header, mRecyclerView);
-        adapter.setData(ProductManager.getInstance().getProducts());
+        adapter.setData(products);
         adapter.setOnClickEvent(ProductFragment.this);
         adapter.setOnParallaxScroll(ProductFragment.this);
         adapter.implementRecyclerAdapterMethods(new ParallaxRecyclerAdapter.RecyclerAdapterMethods() {

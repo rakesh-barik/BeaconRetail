@@ -1,12 +1,10 @@
 package com.tavant.beaconretail;
 
 
-import android.media.Image;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,13 +16,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.tavant.beaconretail.model.Offer;
-import com.tavant.beaconretail.model.Product;
 import com.tavant.beaconretail.model.ProductManager;
 import com.tavant.beaconretail.net.OfferJsonParser;
 import com.tavant.beaconretail.net.VolleySingleton;
 
 import org.json.JSONArray;
-import org.w3c.dom.Text;
 
 
 /**

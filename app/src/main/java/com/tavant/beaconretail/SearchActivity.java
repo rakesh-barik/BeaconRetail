@@ -1,10 +1,10 @@
 package com.tavant.beaconretail;
 
+import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.support.v4.content.IntentCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
@@ -18,6 +18,8 @@ public class SearchActivity extends BaseActivity{
     SearchView mSearchView = null;
     String mQuery = "";
 
+    ProductFragment mProductFragment = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +31,23 @@ public class SearchActivity extends BaseActivity{
                 navigateUpToFromChild(SearchActivity.this, IntentCompat.makeMainActivity(new ComponentName(SearchActivity.this,LandingActivity.class)));
             }
         });
+
+        FragmentManager fm = getFragmentManager();
+        mProductFragment = (ProductFragment)fm.findFragmentById(R.id.fragment_container);
+        String query = getIntent().getStringExtra(SearchManager.QUERY);
+        query = query == null ? "" : query;
+        mQuery = query;
+
+        if (mProductFragment == null) {
+            mProductFragment = new ProductFragment();
+            fm.beginTransaction().add(R.id.fragment_container, mProductFragment).commit();
+        }
+
+        if (mSearchView != null) {
+            mSearchView.setQuery(query, false);
+        }
+
+        overridePendingTransition(0, 0);
     }
 
     @Override
@@ -59,13 +78,13 @@ public class SearchActivity extends BaseActivity{
                     @Override
                     public boolean onQueryTextSubmit(String s) {
                         view.clearFocus();
-
+                        mProductFragment.setFromSearch(s);
                         return true;
                     }
 
                     @Override
                     public boolean onQueryTextChange(String s) {
-
+                        //mProductFragment.setFromSearch(s);
                         return true;
                     }
                 });

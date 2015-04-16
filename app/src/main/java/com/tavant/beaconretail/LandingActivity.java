@@ -1,10 +1,9 @@
 package com.tavant.beaconretail;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -159,7 +158,7 @@ public class LandingActivity extends BaseActivity {
             args.putString("identifier", componentIdentifier);
             fragment.setArguments(args);
         }
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        android.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.root_container, fragment);
         transaction.commit();
     }
