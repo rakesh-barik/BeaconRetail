@@ -84,7 +84,7 @@ public class SearchActivity extends BaseActivity{
 
                     @Override
                     public boolean onQueryTextChange(String s) {
-                        //mProductFragment.setFromSearch(s);
+                        mProductFragment.setFromSearch(s);
                         return true;
                     }
                 });

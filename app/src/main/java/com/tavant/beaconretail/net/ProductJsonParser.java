@@ -17,6 +17,7 @@ public class ProductJsonParser {
     private static final String DEFAULT_CHARSET = "UTF-8";
     private static final String PRODUCT_ID      = "productId";
     private static final String PRODUCT_NAME    = "productName";
+    private static final String PRODUCT_IMAGE   = "productImageUrl";
     private static final String PRODUCT_DESC    = "productDescription";
     private static final String PRODUCT_PRICE   = "price";
     private static final String PRODUCT_SIZE    = "size";
@@ -39,6 +40,7 @@ public class ProductJsonParser {
                 Product product = new Product();
                 product.setId(jsonObject.getInt(PRODUCT_ID));
                 product.setName(jsonObject.getString(PRODUCT_NAME));
+                product.setImageName(jsonObject.getString(PRODUCT_IMAGE));
                 product.setDescription(jsonObject.getString(PRODUCT_DESC));
                 product.setPrice(jsonObject.getString(PRODUCT_PRICE));
                 product.setSize(jsonObject.getString(PRODUCT_SIZE));

@@ -46,7 +46,8 @@ public class ProductManager {
         if (products == null) {
             products = new ArrayList<>();
 
-            for (Product downloadedProduct : productList) {
+            products.addAll(productList);
+            /*for (Product downloadedProduct : productList) {
                 for (String productName : generalProductArray) {
 
                     downloadedProduct.setImageName(productName.replaceAll("\\s+", "").toLowerCase());
@@ -54,7 +55,7 @@ public class ProductManager {
                 }
 
                 products.add(downloadedProduct);
-            }
+            }*/
         }
     }
 

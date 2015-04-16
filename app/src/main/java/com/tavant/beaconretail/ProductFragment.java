@@ -93,16 +93,18 @@ public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter
         if(ProductManager.getInstance().getProducts() != null){
             List<Product> searchedProduct = new ArrayList<Product>();
             for(Product product : ProductManager.getInstance().getProducts()){
-                if(product.getName().contains(queryText)){
+                if(product.getName().toLowerCase().contains(queryText.toLowerCase())){
                     searchedProduct.add(product);
                 }
             }
-            createCardAdapter(searchedProduct);
+            if (searchedProduct != null){
+                createCardAdapter(searchedProduct);
+            }
         }
     }
 
     private void createCardAdapter(List<Product> products) {
-        adapter = new ParallaxRecyclerAdapter(ProductManager.getInstance().getProducts());
+        adapter = new ParallaxRecyclerAdapter(products);
         HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
         mRecyclerView.setLayoutManager(layoutManagerFixed);
         View header = getActivity().getLayoutInflater().inflate(R.layout.header, mRecyclerView, false);
@@ -115,18 +117,21 @@ public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter
         adapter.implementRecyclerAdapterMethods(new ParallaxRecyclerAdapter.RecyclerAdapterMethods() {
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
-                final Product product = (Product) adapter.getData().get(i);
-                if (product.getName() != null)
-                    ((ProductViewHolder) viewHolder).setProductName(product.getName());
+                if(adapter.getData().size() > i) {
+                    final Product product = (Product) adapter.getData().get(i);
+                    if (product.getName() != null)
+                        ((ProductViewHolder) viewHolder).setProductName(product.getName());
 
-                ((ProductViewHolder) viewHolder).setProductImage(getActivity().getResources().getString(R.string.image_url) + String.valueOf(i + 1));
+                    if(product.getImageName() != null)
+                        ((ProductViewHolder) viewHolder).setProductImage(product.getImageName());
 
-                if (product.getDescription() != null)
-                    ((ProductViewHolder) viewHolder).setProductDescription(product.getDescription());
-                if (product.getSize() != null)
-                    ((ProductViewHolder) viewHolder).setProductSize(product.getSize());
-                if (product.getPrice() != null)
-                    ((ProductViewHolder) viewHolder).setProductPrice(product.getPrice());
+                    if (product.getDescription() != null)
+                        ((ProductViewHolder) viewHolder).setProductDescription(product.getDescription());
+                    if (product.getSize() != null)
+                        ((ProductViewHolder) viewHolder).setProductSize(product.getSize());
+                    if (product.getPrice() != null)
+                        ((ProductViewHolder) viewHolder).setProductPrice(product.getPrice());
+                }
             }
 
             @Override
@@ -142,7 +147,7 @@ public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter
 
             @Override
             public int getItemCount() {
-                return ProductManager.getInstance().getProducts().size();
+                return adapter.getData().size();
             }
         });
         mRecyclerView.setAdapter(adapter);
