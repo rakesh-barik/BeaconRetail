@@ -2,6 +2,7 @@ package com.tavant.beaconretail;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -33,11 +34,9 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        toolbar.setBackground(getResources().getDrawable(R.color.primary));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.primary)));
         mImageView = (ImageView)findViewById(R.id.productImage);
         mTextView = (TextView)findViewById(R.id.text);
-
-        initializeButtons();
 
         ViewCompat.setTransitionName(mImageView, EXTRA_IMAGE);
         Picasso.with(this).load(getIntent().getStringExtra(EXTRA_IMAGE)).into(mImageView);
@@ -48,8 +47,8 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                 navigateUpToFromChild(ProductDetailActivity.this, IntentCompat.makeMainActivity(new ComponentName(ProductDetailActivity.this, LandingActivity.class)));
             }
         });
-        //Product product = (Product)getIntent().getSerializableExtra(ARG_ITEM);
 
+        initializeButtons();
 
     }
 
