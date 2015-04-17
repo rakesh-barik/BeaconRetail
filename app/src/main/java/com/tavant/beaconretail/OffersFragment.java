@@ -2,10 +2,13 @@ package com.tavant.beaconretail;
 
 
 import android.app.Fragment;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +47,9 @@ public class OffersFragment extends Fragment implements OfferListAdapter.ItemCli
         if (args != null) {
             sectionIdentifier = args.getString("identifier");
         }
+
+        ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("Special Offers");
+        ((ActionBarActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.primary)));
         getOffersFromServer();
 
         rootView = getRootView(inflater, container, rootView);
