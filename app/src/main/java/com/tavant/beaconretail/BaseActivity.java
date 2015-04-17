@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -87,6 +89,24 @@ public abstract class BaseActivity extends ActionBarActivity {
             offerImage.setImageResource(R.drawable.offer_for_men);
             offerDescription.setText("Pick Men's shoes at");
         }
+
+        final Button cancelButton = (Button)dialog.findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        final Button seeButton = (Button)dialog.findViewById(R.id.see_button);
+        seeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,ProductDetailActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
         dialog.show();
     }
 }

@@ -40,7 +40,7 @@ public class ProductJsonParser {
                 Product product = new Product();
                 product.setId(jsonObject.getInt(PRODUCT_ID));
                 product.setName(jsonObject.getString(PRODUCT_NAME));
-                product.setImageName(jsonObject.getString(PRODUCT_IMAGE));
+                product.setImageUrl(jsonObject.getString(PRODUCT_IMAGE));
                 product.setDescription(jsonObject.getString(PRODUCT_DESC));
                 product.setPrice(jsonObject.getString(PRODUCT_PRICE));
                 product.setSize(jsonObject.getString(PRODUCT_SIZE));

@@ -11,9 +11,6 @@ import java.util.List;
 public class Offer implements Parcelable {
 
     private int offerId;
-    private int sectionId;
-    private int productId;
-    private String beaconId;
     private String offerHeading;
     private String offerDescription;
     private boolean onEntryOffer;
@@ -25,9 +22,6 @@ public class Offer implements Parcelable {
 
     public Offer(Parcel in){
         this.offerId = in.readInt();
-        this.sectionId = in.readInt();
-        this.productId = in.readInt();
-        this.beaconId = in.readString();
         this.offerHeading = in.readString();
         this.offerDescription = in.readString();
 
@@ -49,30 +43,6 @@ public class Offer implements Parcelable {
 
     public void setOfferId(int offerId) {
         this.offerId = offerId;
-    }
-
-    public int getSectionId() {
-        return sectionId;
-    }
-
-    public void setSectionId(int sectionId) {
-        this.sectionId = sectionId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public String getBeaconId() {
-        return beaconId;
-    }
-
-    public void setBeaconId(String beaconId) {
-        this.beaconId = beaconId;
     }
 
     public String getOfferHeading() {

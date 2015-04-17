@@ -16,7 +16,7 @@ public class Product implements Parcelable {
 
     private String name;
     private String description;
-    private String imageName;
+    private String imageUrl;
     private String price;
     private String size;
 
@@ -29,7 +29,7 @@ public class Product implements Parcelable {
 
         this.name = in.readString();
         this.description = in.readString();
-        this.imageName = in.readString();
+        this.imageUrl = in.readString();
         this.price = in.readString();
         this.size = in.readString();
     }
@@ -74,12 +74,12 @@ public class Product implements Parcelable {
         this.description = description;
     }
 
-    public String getImageName() {
-        return imageName;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImageName(String imageName) {
-        this.imageName = imageName;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getPrice() {
@@ -118,7 +118,7 @@ public class Product implements Parcelable {
     public int getImageResourceId(Context context)
     {
         try {
-            return context.getResources().getIdentifier(this.imageName, "drawable", context.getPackageName());
+            return context.getResources().getIdentifier(this.imageUrl, "drawable", context.getPackageName());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -138,7 +138,7 @@ public class Product implements Parcelable {
         dest.writeString(beaconId);
         dest.writeString(name);
         dest.writeString(description);
-        dest.writeString(imageName);
+        dest.writeString(imageUrl);
         dest.writeString(price);
         dest.writeString(size);
     }

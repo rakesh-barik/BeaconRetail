@@ -122,8 +122,8 @@ public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter
                     if (product.getName() != null)
                         ((ProductViewHolder) viewHolder).setProductName(product.getName());
 
-                    if(product.getImageName() != null)
-                        ((ProductViewHolder) viewHolder).setProductImage(product.getImageName());
+                    if(product.getImageUrl() != null)
+                        ((ProductViewHolder) viewHolder).setProductImage(product.getImageUrl());
 
                     if (product.getDescription() != null)
                         ((ProductViewHolder) viewHolder).setProductDescription(product.getDescription());

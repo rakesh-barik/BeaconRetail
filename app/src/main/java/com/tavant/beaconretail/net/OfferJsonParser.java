@@ -19,9 +19,6 @@ public class OfferJsonParser {
     private static final String OFFER_ID        = "offerId";
     private static final String OFFER_HEADING   = "offerHeading";
     private static final String OFFER_DESC      = "offerDescription";
-    private static final String SECTION_ID      = "sectionId";
-    private static final String BEACON_ID       = "beaconId";
-    //private static final String PRODUCT_ID      = "productId";
     private static final String ENTRY_OFFER     = "onEntryOffer";
     private static final String EXIT_OFFER      = "onExitOffer";
 
@@ -44,12 +41,8 @@ public class OfferJsonParser {
                 offer.setOfferId(jsonObject.getInt(OFFER_ID));
                 offer.setOfferHeading(jsonObject.getString(OFFER_HEADING));
                 offer.setOfferDescription(jsonObject.getString(OFFER_DESC));
-                offer.setSectionId(jsonObject.getInt(SECTION_ID));
-                offer.setBeaconId(jsonObject.getString(BEACON_ID));
-                //offer.setProductId(jsonObject.getInt(PRODUCT_ID));
                 offer.setOnEntryOffer(jsonObject.getBoolean(ENTRY_OFFER));
                 offer.setOnExitOffer(jsonObject.getBoolean(EXIT_OFFER));
-
                 offerList.add(offer);
             } catch (JSONException e) {
                 e.printStackTrace();

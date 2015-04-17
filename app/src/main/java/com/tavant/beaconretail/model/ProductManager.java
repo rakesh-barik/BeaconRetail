@@ -50,7 +50,7 @@ public class ProductManager {
             /*for (Product downloadedProduct : productList) {
                 for (String productName : generalProductArray) {
 
-                    downloadedProduct.setImageName(productName.replaceAll("\\s+", "").toLowerCase());
+                    downloadedProduct.setImageUrl(productName.replaceAll("\\s+", "").toLowerCase());
 
                 }
 
