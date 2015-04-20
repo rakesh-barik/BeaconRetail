@@ -33,12 +33,12 @@
             android:layout_below="@id/productName"
             android:layout_centerHorizontal="true"
             android:layout_margin="3dp"
-            android:text="Running shoe"
+            android:text=""
             android:textColor="@color/material_grey_700"
             android:textSize="@dimen/medium" />
 
         <ImageView
-            android:id="@+id/offerImage"
+            android:id="@id/productImage"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_below="@id/productType"
@@ -52,7 +52,7 @@
             android:id="@+id/offer_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/offerImage"
+            android:layout_below="@id/productImage"
             android:background="@color/material_red_700">
 
             <TextView

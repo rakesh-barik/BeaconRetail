@@ -18,8 +18,6 @@ public class LoginActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        ProximityMarketing app = (ProximityMarketing)getApplication();
-//        app.startProximityMarketing();
         setContentView(R.layout.activity_login);
         Button loginButton = (Button) this.findViewById(android.R.id.content).findViewById(R.id.button);
         loginButton.setOnClickListener(new View.OnClickListener() {

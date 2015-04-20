@@ -22,6 +22,10 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+import com.tavant.beaconretail.model.Offer;
+import com.tavant.beaconretail.model.Product;
+import com.tavant.beaconretail.model.ProductManager;
 import com.tavant.beaconretail.proximity.ProximityMarketing;
 
 import org.w3c.dom.Text;
@@ -36,6 +40,11 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected static boolean isVisible = false;
 
     private static Context context;
+
+    private static final int menBeaconId      = 1;
+    private static final int womenBeaconId    = 2;
+    private static final int kidsBeaconId     = 3;
+
 
 
     @Override
@@ -77,17 +86,38 @@ public abstract class BaseActivity extends ActionBarActivity {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.offer_popup);
-        ImageView offerImage = (ImageView)dialog.findViewById(R.id.offerImage);
+        Product product = null;
+        Offer offer = null;
+        TextView productName = (TextView)dialog.findViewById(R.id.productName);
+
+        ImageView offerImage = (ImageView)dialog.findViewById(R.id.productImage);
         TextView offerDescription = (TextView)dialog.findViewById(R.id.offerDescription);
-        if(section.equals(context.getResources().getString(R.string.women_section_offer))){
-            offerImage.setImageResource(R.drawable.womenoffer);
-            offerDescription.setText("Pick Women's shoes at");
-        }else if (section.equals(context.getResources().getString(R.string.men_section_offer))) {
-            offerImage.setImageResource(R.drawable.menoffer);
-            offerDescription.setText("Pick Men's shoes at");
-        }else if (section.equals(context.getResources().getString(R.string.general_offer))) {
-            offerImage.setImageResource(R.drawable.offer_for_men);
-            offerDescription.setText("Pick Men's shoes at");
+        TextView offerPrice = (TextView)dialog.findViewById(R.id.offerPrice);
+
+        if(section.equalsIgnoreCase(context.getResources().getString(R.string.women_section_offer))){
+            product = ProductManager.getInstance().getSectionWiseProduct(womenBeaconId);
+            offer = ProductManager.getInstance().getSectionWiseOffer(product.getOfferId());
+
+            Picasso.with(context).load(product.getImageUrl()).into(offerImage);
+            productName.setText(product.getName());
+            offerDescription.setText(offer.getOfferDescription());
+            offerPrice.setText(offer.getOfferHeading());
+        }else if (section.equalsIgnoreCase(context.getResources().getString(R.string.men_section_offer))) {
+            product = ProductManager.getInstance().getSectionWiseProduct(menBeaconId);
+            offer = ProductManager.getInstance().getSectionWiseOffer(product.getOfferId());
+
+            Picasso.with(context).load(product.getImageUrl()).into(offerImage);
+            productName.setText(product.getName());
+            offerDescription.setText(offer.getOfferDescription());
+            offerPrice.setText(offer.getOfferHeading());
+        }else if (section.equalsIgnoreCase(context.getResources().getString(R.string.general_offer))) {
+            product = ProductManager.getInstance().getSectionWiseProduct(kidsBeaconId);
+            offer = ProductManager.getInstance().getSectionWiseOffer(product.getOfferId());
+
+            Picasso.with(context).load(product.getImageUrl()).into(offerImage);
+            productName.setText(product.getName());
+            offerDescription.setText(offer.getOfferDescription());
+            offerPrice.setText(offer.getOfferHeading());
         }
 
         final Button cancelButton = (Button)dialog.findViewById(R.id.cancel_button);
@@ -99,14 +129,19 @@ public abstract class BaseActivity extends ActionBarActivity {
         });
 
         final Button seeButton = (Button)dialog.findViewById(R.id.see_button);
+        final Product finalProduct = product;
         seeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context,ProductDetailActivity.class);
+                intent.putExtra(ProductDetailActivity.EXTRA_IMAGE, finalProduct.getImageUrl());
+                intent.putExtra(ProductDetailActivity.EXTRA_PRODUCT, finalProduct);
                 context.startActivity(intent);
+                dialog.dismiss();
             }
         });
 
         dialog.show();
     }
+
 }

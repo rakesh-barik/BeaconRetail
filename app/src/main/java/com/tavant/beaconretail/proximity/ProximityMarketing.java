@@ -49,7 +49,10 @@ public class ProximityMarketing extends Application {
     @Override
     public void onCreate() {
         registerActivityLifecycleCallbacks(new ForeGroundCheck());
+
     }
+
+
 
     public void startProximityMarketing() {
         if (isProxyShoppingRunning)
@@ -81,7 +84,7 @@ public class ProximityMarketing extends Application {
                         if (userEntryCheck.isShowWelcomeMsg() && userEntryCheck.isInsidePremise() && !userEntryCheck.isAtEntry()) {
                             if(ForeGroundCheck.isApplicationInForeground()){
                                 BaseActivity.showPopUp(getResources().getString(R.string.general_offer));
-                                Toast.makeText(getApplicationContext(),"You have awesome offers.WELCOME",Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(),"You have awesome offers.WELCOME",Toast.LENGTH_SHORT).show();
                             }else{
                                 postNotification(getString(R.string.welcome_msg), ENTRY_NOTIFICATION_ID,getResources().getString(R.string.general_offer) );
                             }
@@ -102,7 +105,7 @@ public class ProximityMarketing extends Application {
                         if (userEntryCheck.isShowWomenSectionMsg() && userEntryCheck.isAtEntry()) {
                             if(ForeGroundCheck.isApplicationInForeground()){
                                 BaseActivity.showPopUp(getResources().getString(R.string.women_section_offer));
-                                Toast.makeText(getApplicationContext(),"You have awesome offers.WOMEN SECTION",Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(),"You have awesome offers.WOMEN SECTION",Toast.LENGTH_SHORT).show();
                             }else{
                                 postNotification(getString(R.string.women_section_msg), WOMEN_NOTIFICATION_ID,getResources().getString(R.string.women_section_offer));
                             }

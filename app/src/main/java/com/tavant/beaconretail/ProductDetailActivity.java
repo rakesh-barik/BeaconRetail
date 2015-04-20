@@ -9,18 +9,17 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.IntentCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.tavant.beaconretail.model.Product;
+import com.tavant.beaconretail.model.ProductManager;
 
 
 public class ProductDetailActivity extends BaseActivity implements View.OnClickListener {
@@ -28,19 +27,34 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     public static final String PACKAGE = "com.tavant.beaconretail";
 
     public static final String EXTRA_IMAGE = "DetailActivity:image";
+    public static final String EXTRA_PRODUCT = "PRODUCT";
     private ImageView mImageView;
-    private TextView mTextView;
+    private TextView  tvProductName,tvProductSection,tvProductPrice,tvProductDesc;
     private Button sizeSix,sizeSeven,sizeEight,sizeNine,sizeTen;
+    Product product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.primary)));
+
         mImageView = (ImageView)findViewById(R.id.productImage);
-        mTextView = (TextView)findViewById(R.id.text);
+        tvProductName = (TextView)findViewById(R.id.productName);
+        tvProductSection = (TextView)findViewById(R.id.productSection);
+        tvProductPrice = (TextView)findViewById(R.id.productPrice);
+        tvProductDesc = (TextView)findViewById(R.id.product_desc);
 
         ViewCompat.setTransitionName(mImageView, EXTRA_IMAGE);
         Picasso.with(this).load(getIntent().getStringExtra(EXTRA_IMAGE)).into(mImageView);
+
+        product = getIntent().getParcelableExtra(EXTRA_PRODUCT);
+        if(null != product) {
+            tvProductName.setText(product.getName());
+            tvProductSection.setText(product.getSectionName());
+            tvProductPrice.setText(product.getPrice());
+            tvProductDesc.setText(product.getDescription());
+        }
+
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,10 +67,16 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         fabButtonAction();
     }
 
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.activity_product_detail;
+    }
+
     private void fabButtonAction() {
         findViewById(R.id.cart_icon).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ProductManager.getInstance().addProductToCart(product);
                 Toast.makeText(ProductDetailActivity.this, "Item Added to Cart", Toast.LENGTH_SHORT).show();
             }
         });
@@ -76,12 +96,6 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         sizeTen.setOnClickListener(this);
 
     }
-
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.activity_product_detail;
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -109,12 +123,13 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         return super.onOptionsItemSelected(item);
     }
 
-    public static void launch(ProductFragment activity, View transitionView, String url) {
+    public static void launch(ProductFragment activity, View transitionView,Product product, String url) {
         ActivityOptionsCompat options =
                 ActivityOptionsCompat.makeSceneTransitionAnimation(
                         activity.getActivity(), transitionView, EXTRA_IMAGE);
         Intent intent = new Intent(activity.getActivity(), ProductDetailActivity.class);
         intent.putExtra(EXTRA_IMAGE, url);
+        intent.putExtra(EXTRA_PRODUCT,product);
         ActivityCompat.startActivity(activity.getActivity(), intent, options.toBundle());
     }
 

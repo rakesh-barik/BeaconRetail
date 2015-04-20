@@ -50,10 +50,19 @@ public class OffersFragment extends Fragment implements OfferListAdapter.ItemCli
 
         ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("Special Offers");
         ((ActionBarActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.primary)));
-        getOffersFromServer();
+
+
 
         rootView = getRootView(inflater, container, rootView);
 
+        if(ProductManager.getInstance().getGeneralOffer() == null)
+        {
+            //getOffersFromServer();
+        }
+        else {
+            mProductListAdapter = new OfferListAdapter(ProductManager.getInstance().getGeneralOffer(), R.layout.offer_row,OffersFragment.this, getActivity());
+            mRecyclerView.setAdapter(mProductListAdapter);
+        }
         return rootView;
     }
 
@@ -63,24 +72,7 @@ public class OffersFragment extends Fragment implements OfferListAdapter.ItemCli
             mRecyclerView = (RecyclerView) rootView.findViewById(R.id.list);
             mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
             mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-           /* mProductListAdapter = new OfferListAdapter(ProductManager.getInstance().getGeneralOffer(), R.layout.offer_row,this, getActivity());
-            mRecyclerView.setAdapter(mProductListAdapter);*/
-        } else if (sectionIdentifier.equals(getResources().getString(R.string.women_section_offer))) {
-            rootView = inflater.inflate(R.layout.offer_row, container, false);
-            ImageView offerImage = (ImageView) rootView.findViewById(R.id.offerImage);
-            offerImage.setImageResource(R.drawable.womenoffer);
-            TextView userName = (TextView) rootView.findViewById(R.id.offerDescription);
-            userName.setText("Hi! Martina");
-            /*TextView offerForWomen = (TextView) rootView.findViewById(R.id.offer_for);
-            offerForWomen.setText("Pick Women's shoe at");*/
-        } else if (sectionIdentifier.equals(getResources().getString(R.string.men_section_offer))) {
-            rootView = inflater.inflate(R.layout.offer_row, container, false);
-            ImageView offerImage = (ImageView) rootView.findViewById(R.id.offerImage);
-            offerImage.setImageResource(R.drawable.menoffer);
-            TextView userName = (TextView) rootView.findViewById(R.id.offerDescription);
-            userName.setText("Hi! John Andrew");
-            /*TextView offerForMen = (TextView) rootView.findViewById(R.id.offer_for);
-            offerForMen.setText("Pick Men's shoe at");*/
+
         }
         return rootView;
     }

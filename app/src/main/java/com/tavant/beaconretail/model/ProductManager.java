@@ -1,30 +1,24 @@
 package com.tavant.beaconretail.model;
 
 
-import com.tavant.beaconretail.R;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by rakesh.barik on 06-03-2015.
  */
 public class ProductManager {
-    private static int[] productImageArray = {R.drawable.shoe1,R.drawable.shoe11,R.drawable.shoe12,R.drawable.shoe13,R.drawable.shoe14,R.drawable.jacket,R.drawable.jacket2,R.drawable.tshirt};
-    private static String[] generalProductArray = {"Shoe1", "Shoe11", "jacket", "pant", "phone", "jacket2", "Shoe11", "Shoe12", "Shoe13", "Shoe14", "jacket", "jacket2", "tshirt"};
-    private static String[] offerForWomenArray = {"womenoffer"};
-    private static String[] offerForMenArray = {"menoffer"};
-    private static String[] generalOfferArray = {"Shoe1", "jacket", "pant", "phone", "jacket2", "Shoe14", "jacket"};
-    private static String loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut " +
-            "labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea " +
-            "commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. " +
-            "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
     private static ProductManager mInstance;
     private List<Product> products;
-    private List<Offer> productsforWomen;
-    private List<Offer> productsforMen;
+    private List<Product> cartProducts;
     private List<Offer> generalOffer;
+    private List<Section> sections;
+
+    private HashMap<Integer,Product> sectionWiseProducts = new HashMap<>();
+    private HashMap<Integer,Offer> sectionWiseOffers = new HashMap<>();
+
 
     public static ProductManager getInstance() {
         if (mInstance == null) {
@@ -47,61 +41,30 @@ public class ProductManager {
             products = new ArrayList<>();
 
             products.addAll(productList);
-            /*for (Product downloadedProduct : productList) {
-                for (String productName : generalProductArray) {
-
-                    downloadedProduct.setImageUrl(productName.replaceAll("\\s+", "").toLowerCase());
-
-                }
-
-                products.add(downloadedProduct);
-            }*/
+            setSectionWiseProduct();
         }
     }
 
-    //Using duplicate method to return different set of products for now
-    public List<Offer> getOffersForWomen() {
-        if (productsforWomen == null) {
-            return null;
-        }
-
-        return productsforWomen;
+    public List<Product> getCartProducts() {
+        return cartProducts;
     }
 
-    public void setProductsforWomen(List<Offer> offersForWomen) {
-        if(productsforWomen == null){
-            productsforWomen = new ArrayList<Offer>();
+    public void addProductToCart(Product cartProduct) {
+        if(cartProducts == null){
+            cartProducts = new ArrayList<>();
         }
-
-        this.productsforWomen.clear();
-        this.productsforWomen.addAll(offersForWomen);
+        this.cartProducts.add(cartProduct);
     }
 
-    public void setProductsforMen(List<Offer> offersforMen) {
-        if(productsforMen == null){
-            productsforMen = new ArrayList<Offer>();
-        }
-
-        this.productsforMen.clear();
-        this.productsforMen.addAll(offersforMen);
-    }
-
-    //Using duplicate method to return different set of products for now
-    public List<Offer> getOffersForMen() {
-        if (productsforMen == null) {
-            return null;
-        }
-
-        return productsforMen;
-    }
 
     //Using duplicate method to return different set of products for now
     public List<Offer> getGeneralOffer() {
         if (generalOffer == null) {
             return null;
+        }else{
+            return generalOffer;
         }
 
-        return generalOffer;
     }
 
     public void setGeneralOffer(List<Offer> offerList) {
@@ -109,7 +72,42 @@ public class ProductManager {
             generalOffer = new ArrayList<Offer>();
         }
         this.generalOffer.addAll(offerList);
+        setSectionWiseOffers();
     }
 
+    public List<Section> getSections() {
+        return sections;
+    }
 
+    public void setSections(List<Section> sections) {
+        if(this.sections == null){
+            this.sections = new ArrayList<Section>();
+        }
+        this.sections.addAll(sections);
+    }
+
+    public Product getSectionWiseProduct(int sectionID) {
+        return sectionWiseProducts.get(sectionID);
+    }
+
+    public void setSectionWiseProduct() {
+        if(products != null){
+            for(Product product:products){
+                // for the demo we are just keeping only one product to show for each section.
+                sectionWiseProducts.put(product.getSectionId(), product);
+            }
+        }
+    }
+
+    public void setSectionWiseOffers(){
+        if(generalOffer != null){
+            for(Offer offer : generalOffer){
+                sectionWiseOffers.put(offer.getOfferId(),offer);
+            }
+        }
+    }
+
+    public Offer getSectionWiseOffer(int offerID){
+        return sectionWiseOffers.get(offerID);
+    }
 }

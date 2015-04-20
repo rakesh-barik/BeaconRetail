@@ -1,11 +1,10 @@
 package com.tavant.beaconretail;
 
 
-import android.app.Fragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-//import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -34,59 +34,36 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter.OnClickEvent, ParallaxRecyclerAdapter.OnParallaxScroll{
+public class CartFragment extends Fragment implements ParallaxRecyclerAdapter.OnClickEvent, ParallaxRecyclerAdapter.OnParallaxScroll{
     private RecyclerView mRecyclerView;
     private ParallaxRecyclerAdapter adapter;
     private Toolbar mToolbar;
     private BaseActivity activity;
 
-    public ProductFragment() {
+    public CartFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.product_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_cart, container, false);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.list);
         mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("Beacon Retails");
+        ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("Cart");
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        if (ProductManager.getInstance().getProducts() == null) {
-            getProductsFromServer();
+        if (ProductManager.getInstance().getCartProducts() == null) {
+            Toast.makeText(getActivity(),"No items in the cart",Toast.LENGTH_LONG).show();
         } else {
-            createCardAdapter(ProductManager.getInstance().getProducts());
+            createCardAdapter(ProductManager.getInstance().getCartProducts());
         }
         return rootView;
-    }
-
-    private void getProductsFromServer() {
-        JsonArrayRequest request = new JsonArrayRequest(getResources().getString(R.string.products_url), new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                try {
-                    VolleyLog.v("Response :%n %s", response.toString());
-                    new ProductJsonParser(response);
-
-                    createCardAdapter(ProductManager.getInstance().getProducts());
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.e("Error: ", error.getMessage());
-            }
-        });
-        VolleySingleton.getInstance(getActivity()).addToRequestQueue(request);
     }
 
     public void setFromSearch(String queryText){
@@ -112,8 +89,8 @@ public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter
         adapter.setShouldClipView(false);
         adapter.setParallaxHeader(header, mRecyclerView);
         adapter.setData(products);
-        adapter.setOnClickEvent(ProductFragment.this);
-        adapter.setOnParallaxScroll(ProductFragment.this);
+        adapter.setOnClickEvent(CartFragment.this);
+        adapter.setOnParallaxScroll(CartFragment.this);
         adapter.implementRecyclerAdapterMethods(new ParallaxRecyclerAdapter.RecyclerAdapterMethods() {
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
@@ -157,13 +134,13 @@ public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter
     public void itemClicked(View v,Product product) {
         View imageView = v.findViewById(R.id.productImage);
         String url = (String) imageView.getTag();
-        ProductDetailActivity.launch(this,imageView,product,url);
+        //ProductDetailActivity.launch(this,imageView,url);
     }
 
     @Override
     public void onClick(View v, int position) {
         if (position != -1) {
-           itemClicked(v,(Product) adapter.getData().get(position));
+            itemClicked(v,(Product) adapter.getData().get(position));
         }
     }
 
@@ -256,4 +233,5 @@ public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter
             parent.setOnClickListener(listener);
         }
     }
+
 }

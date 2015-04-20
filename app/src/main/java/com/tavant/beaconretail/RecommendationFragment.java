@@ -4,7 +4,6 @@ package com.tavant.beaconretail;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -45,9 +44,17 @@ public class RecommendationFragment extends Fragment implements OfferListAdapter
         if (args != null) {
             sectionIdentifier = args.getString("identifier");
         }
-        getOffersFromServer();
 
         rootView = getRootView(inflater, container, rootView);
+
+        if(ProductManager.getInstance().getGeneralOffer() == null)
+        {
+            getRecommendationsFromServer();
+        }
+        else {
+            mProductListAdapter = new OfferListAdapter(ProductManager.getInstance().getGeneralOffer(), R.layout.offer_row,RecommendationFragment.this, getActivity());
+            mRecyclerView.setAdapter(mProductListAdapter);
+        }
 
         return rootView;
     }
@@ -79,7 +86,7 @@ public class RecommendationFragment extends Fragment implements OfferListAdapter
         return rootView;
     }
 
-    private void getOffersFromServer() {
+    private void getRecommendationsFromServer() {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(getResources().getString(R.string.offer_url), new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

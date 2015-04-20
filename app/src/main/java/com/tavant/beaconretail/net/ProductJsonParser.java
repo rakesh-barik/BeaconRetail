@@ -23,7 +23,8 @@ public class ProductJsonParser {
     private static final String PRODUCT_SIZE    = "size";
     private static final String SECTION_ID      = "sectionId";
     private static final String BEACON_ID       = "beaconId";
-
+    private static final String OFFER_ID        = "offerid";
+    private static final String SECTION_NAME    = "sectionName";
     private List<Product> productsList;
 
 
@@ -46,6 +47,8 @@ public class ProductJsonParser {
                 product.setSize(jsonObject.getString(PRODUCT_SIZE));
                 product.setSectionId(jsonObject.getInt(SECTION_ID));
                 product.setBeaconId(jsonObject.getString(BEACON_ID));
+                product.setOfferId(jsonObject.getInt(OFFER_ID));
+                product.setSectionName(jsonObject.getString(SECTION_NAME));
                 productsList.add(product);
             } catch (JSONException e) {
                 e.printStackTrace();
