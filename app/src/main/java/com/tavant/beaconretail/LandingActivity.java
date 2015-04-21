@@ -16,8 +16,19 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.tavant.beaconretail.model.DrawerMenuItem;
+import com.tavant.beaconretail.model.ProductManager;
+import com.tavant.beaconretail.net.OfferJsonParser;
+import com.tavant.beaconretail.net.ProductJsonParser;
+import com.tavant.beaconretail.net.SectionJsonParser;
+import com.tavant.beaconretail.net.VolleySingleton;
 import com.tavant.beaconretail.proximity.ProximityMarketing;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +48,7 @@ public class LandingActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ProximityMarketing app = (ProximityMarketing) getApplication();
-        app.startProximityMarketing();
+        initiateNetworkOperations();
         setActionBarIcon(R.drawable.ic_ab_drawer);
         toggleToolbarToDrawer();
         String componentIdentifier = getIntent().getStringExtra("Section");
@@ -50,6 +60,71 @@ public class LandingActivity extends BaseActivity {
         }
         initializeMenu();
 
+    }
+
+    private void initiateNetworkOperations() {
+        if(ProductManager.getInstance().getProducts() == null) {
+            getSectionsFromServer();
+            getProductsFromServer();
+            getOffersFromServer();
+        }
+    }
+
+    private void getSectionsFromServer(){
+        JsonArrayRequest request = new JsonArrayRequest(getResources().getString(R.string.sections_url), new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    VolleyLog.v("Response :%n %s", response.toString());
+                    new SectionJsonParser(response);
+                    ProximityMarketing app = (ProximityMarketing) getApplication();
+                    app.startProximityMarketing();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+            }
+        });
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
+    }
+
+    private void getProductsFromServer() {
+        JsonArrayRequest request = new JsonArrayRequest(getResources().getString(R.string.products_url), new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    VolleyLog.v("Response :%n %s", response.toString());
+                    new ProductJsonParser(response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+            }
+        });
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
+    }
+
+    private void getOffersFromServer() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(getResources().getString(R.string.offer_url), new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                new OfferJsonParser(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        VolleySingleton.getInstance(this).addToRequestQueue(jsonArrayRequest);
     }
 
     private void initializeMenu() {
@@ -83,6 +158,7 @@ public class LandingActivity extends BaseActivity {
                 drawerLayout.closeDrawers();
                 break;
             case 3:
+                loadFragment(new CartFragment(), null);
                 drawerLayout.closeDrawers();
                 break;
             case 4:
