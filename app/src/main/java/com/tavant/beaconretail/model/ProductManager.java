@@ -3,7 +3,12 @@ package com.tavant.beaconretail.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by rakesh.barik on 06-03-2015.
@@ -46,6 +51,12 @@ public class ProductManager {
     }
 
     public List<Product> getCartProducts() {
+        Map<Integer, Product> map = new LinkedHashMap<>();
+        for (Product cartProduct : cartProducts) {
+            map.put(Integer.valueOf(cartProduct.getId()), cartProduct);
+        }
+        cartProducts.clear();
+        cartProducts.addAll(map.values());
         return cartProducts;
     }
 

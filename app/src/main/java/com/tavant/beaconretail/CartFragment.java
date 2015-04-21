@@ -26,6 +26,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.poliveira.parallaxrecyclerview.HeaderLayoutManagerFixed;
 import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
 import com.squareup.picasso.Picasso;
+import com.tavant.beaconretail.animator.SlideInOutBottomItemAnimator;
 import com.tavant.beaconretail.model.Product;
 import com.tavant.beaconretail.model.ProductManager;
 import com.tavant.beaconretail.net.ProductJsonParser;
@@ -58,7 +59,7 @@ public class CartFragment extends Fragment implements ParallaxRecyclerAdapter.On
         mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("Cart");
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
 
         if (ProductManager.getInstance().getCartProducts() == null) {
             Toast.makeText(getActivity(),"No items in the cart",Toast.LENGTH_LONG).show();
@@ -130,6 +131,7 @@ public class CartFragment extends Fragment implements ParallaxRecyclerAdapter.On
             }
         });
         mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setItemAnimator(new SlideInOutBottomItemAnimator(mRecyclerView));
     }
 
 
@@ -161,6 +163,7 @@ public class CartFragment extends Fragment implements ParallaxRecyclerAdapter.On
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 adapter.removeItem(adapter.getData().get(position));
+                //adapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
         });
