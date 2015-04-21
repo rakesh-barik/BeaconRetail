@@ -42,7 +42,10 @@ public class ParallaxRecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVie
          * @param position position on the array
          */
         void onClick(View v, int position);
+        void onLongClick(View v, int position);
     }
+
+
 
     public interface OnParallaxScroll {
         /**
@@ -117,13 +120,23 @@ public class ParallaxRecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVie
             mRecyclerAdapterMethods.onBindViewHolder(viewHolder, i - 1);
         } else if (i != 0)
             mRecyclerAdapterMethods.onBindViewHolder(viewHolder, i);
-        if (mOnClickEvent != null)
+        if (mOnClickEvent != null) {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mOnClickEvent.onClick(v, i - (mHeader == null ? 0 : 1));
                 }
             });
+
+            viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    mOnClickEvent.onLongClick(v, i - (mHeader == null ? 0 : 1));
+                    return true;
+                }
+            });
+        }
+
     }
 
     @Override

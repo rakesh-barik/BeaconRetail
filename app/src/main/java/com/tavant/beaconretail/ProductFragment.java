@@ -168,6 +168,11 @@ public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter
     }
 
     @Override
+    public void onLongClick(View v, int position) {
+
+    }
+
+    @Override
     public void onParallaxScroll(float percentage, float offset, View parallax) {
 
         Drawable c = mToolbar.getBackground();

@@ -1,7 +1,9 @@
 package com.tavant.beaconretail;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -142,6 +144,34 @@ public class CartFragment extends Fragment implements ParallaxRecyclerAdapter.On
         if (position != -1) {
             itemClicked(v,(Product) adapter.getData().get(position));
         }
+    }
+
+    @Override
+    public void onLongClick(View v, int position) {
+        if (position != -1) {
+            showAlertDialog(position);
+
+        }
+    }
+
+    private void showAlertDialog(final int position) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        alertDialogBuilder.setMessage(R.string.decision);
+        alertDialogBuilder.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                adapter.removeItem(adapter.getData().get(position));
+                dialog.dismiss();
+            }
+        });
+        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = alertDialogBuilder.create();
+        dialog.show();
     }
 
     @Override
