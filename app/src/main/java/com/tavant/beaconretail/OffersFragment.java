@@ -57,7 +57,7 @@ public class OffersFragment extends Fragment implements OfferListAdapter.ItemCli
 
         if(ProductManager.getInstance().getGeneralOffer() == null)
         {
-            //getOffersFromServer();
+            getOffersFromServer();
         }
         else {
             mProductListAdapter = new OfferListAdapter(ProductManager.getInstance().getGeneralOffer(), R.layout.offer_row,OffersFragment.this, getActivity());

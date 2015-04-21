@@ -229,7 +229,7 @@ public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter
 
 
         public void setProductSize(String productSize) {
-            this.productSize.setText(productSize);
+            this.productSize.setText(" "+productSize);
         }
 
 
