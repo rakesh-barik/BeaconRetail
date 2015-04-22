@@ -61,8 +61,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_margin="10dp"
                 android:text="690"
-                android:textColor="@color/material_blue_500"
-                android:textSize="@dimen/x_large" />
+                android:textColor="@color/primary"
+                android:textSize="@dimen/large" />
 
             <View
                 android:id="@+id/second_divider"
@@ -154,7 +154,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         fab:fab_icon="@drawable/cart_fab"
-        fab:fab_colorNormal="@color/material_orange_700"
+        fab:fab_colorNormal="@color/primary"
         fab:fab_colorPressed="@color/material_orange_500"
         android:layout_gravity="bottom|right"
         android:layout_alignParentBottom="true"

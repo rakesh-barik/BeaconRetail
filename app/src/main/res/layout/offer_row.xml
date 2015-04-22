@@ -31,9 +31,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/offerImage"
+            android:layout_marginLeft="10dp"
             android:textColor="@android:color/primary_text_light"
             android:textSize="@dimen/small"
-            android:text="Nike Blue" />
+            android:text="Puma Jacket" />
 
         <TextView
             android:id="@+id/offerPrice"
@@ -43,7 +44,7 @@
             android:layout_below="@id/offerDescription"
             android:textColor="@color/material_red_700"
             android:textSize="@dimen/medium"
-            android:text="Rs.699" />
+            android:text="$199" />
 
         <TextView
             android:id="@+id/actualPrice"
@@ -54,7 +55,7 @@
             android:background="@drawable/strike"
             android:textColor="@android:color/secondary_text_light"
             android:textSize="@dimen/micro"
-            android:text="Rs.2249" />
+            android:text="$299" />
 
         <TextView
             android:id="@+id/discountPercentage"

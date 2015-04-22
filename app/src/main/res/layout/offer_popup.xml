@@ -44,7 +44,6 @@
             android:layout_below="@id/productType"
             android:layout_centerHorizontal="true"
             android:layout_margin="10dp"
-            android:background="@color/background"
             android:scaleType="fitCenter"
             android:src="@drawable/offer_for_men" />
 
@@ -59,6 +58,7 @@
                 android:id="@+id/offerDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_centerHorizontal="true"
                 android:text="Pick Men's Shoes at"
                 android:textColor="@color/white"
