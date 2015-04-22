@@ -158,6 +158,7 @@ public class ProductFragment extends Fragment implements ParallaxRecyclerAdapter
         View imageView = v.findViewById(R.id.productImage);
         String url = (String) imageView.getTag();
         ProductDetailActivity.launch(this,imageView,product,url);
+        getActivity().overridePendingTransition(0, 0);
     }
 
     @Override

@@ -91,11 +91,10 @@
             android:layout_margin="5dp"
             android:textColor="@color/primary"
             android:textSize="@dimen/medium"
-            android:layout_below="@id/productSize"
-            android:layout_alignBaseline="@id/productImage"
             android:layout_alignRight="@id/productImage"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             tools:text="2500"
 
             android:layout_alignEnd="@id/productImage" />

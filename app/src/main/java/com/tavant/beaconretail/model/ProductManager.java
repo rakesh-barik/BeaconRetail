@@ -51,12 +51,14 @@ public class ProductManager {
     }
 
     public List<Product> getCartProducts() {
-        Map<Integer, Product> map = new LinkedHashMap<>();
-        for (Product cartProduct : cartProducts) {
-            map.put(Integer.valueOf(cartProduct.getId()), cartProduct);
+        if (cartProducts != null) {
+            Map<Integer, Product> map = new LinkedHashMap<>();
+            for (Product cartProduct : cartProducts) {
+                map.put(Integer.valueOf(cartProduct.getId()), cartProduct);
+            }
+            cartProducts.clear();
+            cartProducts.addAll(map.values());
         }
-        cartProducts.clear();
-        cartProducts.addAll(map.values());
         return cartProducts;
     }
 

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,6 +28,7 @@ import com.poliveira.parallaxrecyclerview.HeaderLayoutManagerFixed;
 import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
 import com.squareup.picasso.Picasso;
 import com.tavant.beaconretail.animator.SlideInOutBottomItemAnimator;
+import com.tavant.beaconretail.animator.SlideInOutLeftItemAnimator;
 import com.tavant.beaconretail.model.Product;
 import com.tavant.beaconretail.model.ProductManager;
 import com.tavant.beaconretail.net.ProductJsonParser;
@@ -66,6 +68,8 @@ public class CartFragment extends Fragment implements ParallaxRecyclerAdapter.On
         } else {
             createCardAdapter(ProductManager.getInstance().getCartProducts());
         }
+        //BaseActivity.showPopUp("checkout",getActivity());
+
         return rootView;
     }
 
@@ -131,14 +135,14 @@ public class CartFragment extends Fragment implements ParallaxRecyclerAdapter.On
             }
         });
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setItemAnimator(new SlideInOutBottomItemAnimator(mRecyclerView));
+        mRecyclerView.setItemAnimator(new SlideInOutLeftItemAnimator(mRecyclerView));
     }
 
 
     public void itemClicked(View v,Product product) {
         View imageView = v.findViewById(R.id.productImage);
         String url = (String) imageView.getTag();
-        //ProductDetailActivity.launch(this,imageView,url);
+        ProductDetailActivity.launch(this,imageView,product,url);
     }
 
     @Override
@@ -163,7 +167,7 @@ public class CartFragment extends Fragment implements ParallaxRecyclerAdapter.On
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 adapter.removeItem(adapter.getData().get(position));
-                //adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
         });

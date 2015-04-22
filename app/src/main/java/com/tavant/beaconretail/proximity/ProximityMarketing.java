@@ -11,6 +11,7 @@ import com.estimote.sdk.BeaconManager.MonitoringListener;
 import com.tavant.beaconretail.BaseActivity;
 import com.tavant.beaconretail.LandingActivity;
 import com.tavant.beaconretail.R;
+import com.tavant.beaconretail.model.ProductManager;
 
 import android.app.Application;
 import android.app.Dialog;
@@ -45,16 +46,19 @@ public class ProximityMarketing extends Application {
     private static final int WOMEN_NOTIFICATION_ID = 789;
     private static final int EXIT_NOTIFICATION_ID = 012;
     private static final String TAG = "ProximityMarketing";
+    private ForeGroundCheck mFGCheck = null;
 
     @Override
     public void onCreate() {
-        registerActivityLifecycleCallbacks(new ForeGroundCheck());
+        mFGCheck = new ForeGroundCheck();
+        registerActivityLifecycleCallbacks(mFGCheck);
 
     }
 
 
 
     public void startProximityMarketing() {
+
         if (isProxyShoppingRunning)
             return;
 
@@ -70,10 +74,18 @@ public class ProximityMarketing extends Application {
                 for (Beacon beacon : beacons) {
                     if (beacon.getMinor() == getResources().getInteger(R.integer.main_entrance_minor)) {
                         if(userEntryCheck.isInsidePremise() && userEntryCheck.isAtEntry()){
-                            if(ForeGroundCheck.isApplicationInForeground()){
-                                BaseActivity.showPopUp(getResources().getString(R.string.general_offer));
+                            if(mFGCheck.isApplicationInForeground()){
+                                if(ProductManager.getInstance().getCartProducts() != null){
+                                    BaseActivity.showPopUp(getResources().getString(R.string.check_out),mFGCheck.getDisplayContext());
+                                }else {
+                                    BaseActivity.showPopUp(getResources().getString(R.string.general_offer),mFGCheck.getDisplayContext());
+                                }
                             }else{
-                                postNotification(getString(R.string.exit_msg), EXIT_NOTIFICATION_ID, null);
+                                if(ProductManager.getInstance().getCartProducts() != null){
+                                    postNotification(getString(R.string.exit_msg_with_cart), EXIT_NOTIFICATION_ID, null);
+                                }else {
+                                    postNotification(getString(R.string.exit_msg), EXIT_NOTIFICATION_ID, null);
+                                }
                             }
                         }
                         userEntryCheck.setInsidePremise(true);
@@ -82,9 +94,9 @@ public class ProximityMarketing extends Application {
                         userEntryCheck.setAtWomenSection(false);
                     } else if (beacon.getMinor() == getResources().getInteger(R.integer.entry_minor)) {
                         if (userEntryCheck.isShowWelcomeMsg() && userEntryCheck.isInsidePremise() && !userEntryCheck.isAtEntry()) {
-                            if(ForeGroundCheck.isApplicationInForeground()){
-                                BaseActivity.showPopUp(getResources().getString(R.string.general_offer));
-                                //Toast.makeText(getApplicationContext(),"You have awesome offers.WELCOME",Toast.LENGTH_SHORT).show();
+                            if(mFGCheck.isApplicationInForeground()){
+                                BaseActivity.showPopUp(getResources().getString(R.string.general_offer),mFGCheck.getDisplayContext());
+
                             }else{
                                 postNotification(getString(R.string.welcome_msg), ENTRY_NOTIFICATION_ID,getResources().getString(R.string.general_offer) );
                             }
@@ -93,8 +105,8 @@ public class ProximityMarketing extends Application {
                         }
                     } else if (beacon.getMinor() == getResources().getInteger(R.integer.men_minor)) {
                         if (userEntryCheck.isShowMenSectionMsg() && userEntryCheck.isAtEntry()) {
-                            if(ForeGroundCheck.isApplicationInForeground()){
-                                BaseActivity.showPopUp(getResources().getString(R.string.men_section_offer));
+                            if(mFGCheck.isApplicationInForeground()){
+                                BaseActivity.showPopUp(getResources().getString(R.string.men_section_offer),mFGCheck.getDisplayContext());
                             }else{
                                 postNotification(getString(R.string.men_section_msg), MEN_NOTIFICATION_ID,getResources().getString(R.string.men_section_offer));
                             }
@@ -103,9 +115,9 @@ public class ProximityMarketing extends Application {
                         }
                     } else if (beacon.getMinor() == getResources().getInteger(R.integer.women_minor)) {
                         if (userEntryCheck.isShowWomenSectionMsg() && userEntryCheck.isAtEntry()) {
-                            if(ForeGroundCheck.isApplicationInForeground()){
-                                BaseActivity.showPopUp(getResources().getString(R.string.women_section_offer));
-                                //Toast.makeText(getApplicationContext(),"You have awesome offers.WOMEN SECTION",Toast.LENGTH_SHORT).show();
+                            if(mFGCheck.isApplicationInForeground()){
+                                BaseActivity.showPopUp(getResources().getString(R.string.women_section_offer),mFGCheck.getDisplayContext());
+
                             }else{
                                 postNotification(getString(R.string.women_section_msg), WOMEN_NOTIFICATION_ID,getResources().getString(R.string.women_section_offer));
                             }
@@ -119,6 +131,13 @@ public class ProximityMarketing extends Application {
 
             @Override
             public void onExitedRegion(Region region) {
+
+            }
+        });
+
+        beaconManager.setRangingListener(new BeaconManager.RangingListener() {
+            @Override
+            public void onBeaconsDiscovered(Region region, List<Beacon> beacons) {
 
             }
         });

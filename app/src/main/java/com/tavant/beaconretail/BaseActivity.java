@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -29,6 +30,9 @@ import com.tavant.beaconretail.model.ProductManager;
 import com.tavant.beaconretail.proximity.ProximityMarketing;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by rakesh.barik on 05-03-2015.
@@ -82,12 +86,55 @@ public abstract class BaseActivity extends ActionBarActivity {
         setVisible(false);
     }
 
-    public static void showPopUp(String section) {
-        final Dialog dialog = new Dialog(context);
+    public static void showPopUp(final String section,Context displayContext) {
+
+        final Dialog dialog = new Dialog(displayContext);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        if(!section.equalsIgnoreCase("checkout")){
+            insidePremisesOffers(section, dialog);
+        }else{
+            checkoutOffers(dialog);
+        }
+        dialog.show();
+
+    }
+
+    private static void checkoutOffers(final Dialog dialog) {
+        dialog.setContentView(R.layout.checkout_popup);
+
+        TextView productsList = (TextView)dialog.findViewById(R.id.productList);
+        //TextView totalAmount = (TextView)dialog.findViewById(R.id.totalAmount);
+
+        List<Product> cartProducts = ProductManager.getInstance().getCartProducts();
+        String productNames = "";
+
+        for (Product product : cartProducts){
+            productNames = productNames + product.getName()+ " ,";
+        }
+        productsList.setText(productNames);
+
+        final Button walletButton = (Button) dialog.findViewById(R.id.wallet_button);
+        walletButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        final Button cancelButton = (Button) dialog.findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+    private static void insidePremisesOffers(String section, final Dialog dialog) {
         dialog.setContentView(R.layout.offer_popup);
+
         Product product = null;
         Offer offer = null;
+
         TextView productName = (TextView)dialog.findViewById(R.id.productName);
 
         ImageView offerImage = (ImageView)dialog.findViewById(R.id.productImage);
@@ -140,8 +187,6 @@ public abstract class BaseActivity extends ActionBarActivity {
                 dialog.dismiss();
             }
         });
-
-        dialog.show();
     }
 
 }

@@ -1,30 +1,27 @@
 package com.tavant.beaconretail.animator;
 
+/**
+ * Created by rakesh.barik on 22-04-2015.
+ */
+
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-/**
- * Created by rakesh.barik on 21-04-2015.
- */
-public class SlideInOutBottomItemAnimator extends BaseItemAnimator {
+public class SlideInOutLeftItemAnimator extends BaseItemAnimator {
 
-    private float mOriginalY;
-    private float mDeltaY;
-
-    public SlideInOutBottomItemAnimator(RecyclerView recyclerView) {
+    public SlideInOutLeftItemAnimator(RecyclerView recyclerView){
         super(recyclerView);
     }
 
     protected void animateRemoveImpl(final RecyclerView.ViewHolder holder) {
         final View view = holder.itemView;
-
         ViewCompat.animate(view).cancel();
-        ViewCompat.animate(view).setDuration(500).
-                translationY(+mDeltaY).setListener(new VpaListenerAdapter() {
+        ViewCompat.animate(view).setDuration(getRemoveDuration()).
+                translationX(-mRecyclerView.getWidth()).setListener(new VpaListenerAdapter() {
             @Override
             public void onAnimationEnd(View view) {
-                ViewCompat.setTranslationY(view, +mDeltaY);
+                ViewCompat.setTranslationX(view, -mRecyclerView.getWidth());
                 dispatchRemoveFinished(holder);
                 mRemoveAnimations.remove(holder);
                 dispatchFinishedWhenDone();
@@ -35,20 +32,19 @@ public class SlideInOutBottomItemAnimator extends BaseItemAnimator {
 
     @Override
     protected void prepareAnimateAdd(RecyclerView.ViewHolder holder) {
-        retrieveItemPosition(holder);
-        ViewCompat.setTranslationY(holder.itemView, +mDeltaY);
+        ViewCompat.setTranslationX(holder.itemView, -mRecyclerView.getWidth());
     }
 
     protected void animateAddImpl(final RecyclerView.ViewHolder holder) {
         final View view = holder.itemView;
 
         ViewCompat.animate(view).cancel();
-        ViewCompat.animate(view).translationY(0)
+        ViewCompat.animate(view).translationX(0)
                 .setDuration(getAddDuration()).
                 setListener(new VpaListenerAdapter() {
                     @Override
                     public void onAnimationCancel(View view) {
-                        ViewCompat.setTranslationY(view, 0);
+                        ViewCompat.setTranslationX(view, 0);
                     }
 
                     @Override
@@ -60,13 +56,6 @@ public class SlideInOutBottomItemAnimator extends BaseItemAnimator {
                 }).start();
         mAddAnimations.add(holder);
     }
-
-
-    private void retrieveItemPosition(final RecyclerView.ViewHolder holder){
-        mOriginalY = mRecyclerView.getLayoutManager().getDecoratedTop(holder.itemView);
-        mDeltaY = mRecyclerView.getHeight() - mOriginalY;
-    }
-
 
     @Override
     public boolean animateChange(RecyclerView.ViewHolder oldHolder, RecyclerView.ViewHolder newHolder, int fromLeft, int fromTop, int toLeft, int toTop) {

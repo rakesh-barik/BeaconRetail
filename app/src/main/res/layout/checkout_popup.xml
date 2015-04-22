@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/popup_element"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="0dp"
+    android:background="@color/white"
+    android:clickable="true"
+    android:orientation="vertical"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/productName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="6dp"
+            android:text="Check Out"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/x_large" />
+
+
+        <TextView
+            android:id="@+id/productList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productName"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:text="liliput dress, watch, jacket"
+            android:textSize="@dimen/large"
+            android:textColor="@color/material_grey_700"
+            />
+
+        <TextView
+            android:id="@+id/totalAmountTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productList"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:text="Total Amount"
+            android:textSize="@dimen/large"
+            android:textColor="@color/primary"
+            />
+
+        <TextView
+            android:id="@+id/totalAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/totalAmountTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:text="$399"
+            android:textSize="@dimen/x_large"
+            android:textColor="@color/primary"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/totalAmount"
+            android:orientation="vertical"
+            android:weightSum="100">
+
+            <Button
+                android:id="@+id/wallet_button"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="50"
+                android:layout_gravity="center_horizontal"
+                android:drawableLeft="@drawable/wallet"
+                android:background="?android:attr/selectableItemBackground"
+                android:text="Buy using Wallet"
+                android:textColor="@color/material_green_700" />
+            <Button
+                android:id="@+id/cancel_button"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="50"
+                android:layout_gravity="center_horizontal"
+                android:background="?android:attr/selectableItemBackground"
+                android:text="Cancel"
+                android:textColor="@color/material_red_A200" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

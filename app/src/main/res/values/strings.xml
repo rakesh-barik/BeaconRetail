@@ -17,11 +17,13 @@
     <string name="beacon_uuid">b9407f30-f5f8-466e-aff9-25556b57fe6d</string>
     <string name="welcome_msg">Welcome to Tavant Retail Store!</string>
     <string name="exit_msg">Thanks for visiting Tavant Retail Store!</string>
+    <string name="exit_msg_with_cart">You have items in cart.Would you like to purchase?</string>
     <string name="men_section_msg">We have exciting offers for you in Men section</string>
     <string name="women_section_msg">We have exciting offers for you in Women section</string>
     <string name="decision">Do you want to remove it from your cart ?</string>
 
     <!--NOTIFICATION MESSAGE SECTION ARGS VALUES-->
+    <string name="check_out">checkout</string>
     <string name="general_offer">general</string>
     <string name="men_section_offer">men</string>
     <string name="women_section_offer">women</string>

@@ -1,5 +1,6 @@
 package com.tavant.beaconretail;
 
+import android.app.Fragment;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -125,14 +126,14 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         return super.onOptionsItemSelected(item);
     }
 
-    public static void launch(ProductFragment activity, View transitionView,Product product, String url) {
+    public static void launch(Fragment fragment, View transitionView,Product product, String url) {
         ActivityOptionsCompat options =
                 ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        activity.getActivity(), transitionView, EXTRA_IMAGE);
-        Intent intent = new Intent(activity.getActivity(), ProductDetailActivity.class);
+                        fragment.getActivity(), transitionView, EXTRA_IMAGE);
+        Intent intent = new Intent(fragment.getActivity(), ProductDetailActivity.class);
         intent.putExtra(EXTRA_IMAGE, url);
         intent.putExtra(EXTRA_PRODUCT,product);
-        ActivityCompat.startActivity(activity.getActivity(), intent, options.toBundle());
+        ActivityCompat.startActivity(fragment.getActivity(), intent, options.toBundle());
     }
 
     @Override
