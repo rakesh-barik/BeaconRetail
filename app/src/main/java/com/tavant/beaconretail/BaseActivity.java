@@ -28,6 +28,7 @@ import com.tavant.beaconretail.model.Offer;
 import com.tavant.beaconretail.model.Product;
 import com.tavant.beaconretail.model.ProductManager;
 import com.tavant.beaconretail.proximity.ProximityMarketing;
+import com.tavant.beaconretail.proximity.UserEntryCheck;
 
 import org.w3c.dom.Text;
 
@@ -93,40 +94,43 @@ public abstract class BaseActivity extends ActionBarActivity {
         if(!section.equalsIgnoreCase("checkout")){
             insidePremisesOffers(section, dialog);
         }else{
-            checkoutOffers(dialog);
+            checkoutOffers(dialog,displayContext);
         }
         dialog.show();
 
     }
 
-    private static void checkoutOffers(final Dialog dialog) {
+    private static void checkoutOffers(final Dialog dialog, final Context displayContext) {
         dialog.setContentView(R.layout.checkout_popup);
-
-        TextView productsList = (TextView)dialog.findViewById(R.id.productList);
-        //TextView totalAmount = (TextView)dialog.findViewById(R.id.totalAmount);
 
         List<Product> cartProducts = ProductManager.getInstance().getCartProducts();
         String productNames = "";
-
-        for (Product product : cartProducts){
-            productNames = productNames + product.getName()+ " ,";
-        }
-        productsList.setText(productNames);
 
         final Button walletButton = (Button) dialog.findViewById(R.id.wallet_button);
         walletButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                loadCart(displayContext, dialog);
             }
         });
         final Button cancelButton = (Button) dialog.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                loadCart(displayContext, dialog);
             }
         });
+
+
+    }
+
+    private static void loadCart(Context displayContext, Dialog dialog) {
+        UserEntryCheck.getInstance().setAnyPopUpShowing(false);
+        Intent intent = new Intent(displayContext, LandingActivity.class);
+        intent.putExtra("Section", "cart");
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        displayContext.startActivity(intent);
+        dialog.dismiss();
     }
 
     private static void insidePremisesOffers(String section, final Dialog dialog) {
@@ -171,6 +175,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UserEntryCheck.getInstance().setAnyPopUpShowing(false);
                 dialog.dismiss();
             }
         });
@@ -184,6 +189,7 @@ public abstract class BaseActivity extends ActionBarActivity {
                 intent.putExtra(ProductDetailActivity.EXTRA_IMAGE, finalProduct.getImageUrl());
                 intent.putExtra(ProductDetailActivity.EXTRA_PRODUCT, finalProduct);
                 context.startActivity(intent);
+                UserEntryCheck.getInstance().setAnyPopUpShowing(false);
                 dialog.dismiss();
             }
         });

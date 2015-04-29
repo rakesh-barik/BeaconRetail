@@ -6,13 +6,15 @@ package com.tavant.beaconretail.proximity;
 public class UserEntryCheck {
     private static UserEntryCheck ourInstance;
     private boolean isInsidePremise;
-    private boolean isAtEntry;
-    private boolean isAtMenSection;
-    private boolean isAtWomenSection;
 
-    private boolean showWelcomeMsg = true;
-    private boolean showMenSectionMsg = true;
-    private boolean showWomenSectionMsg = true;
+    private boolean isAtEntry;
+
+    private boolean isAnyPopUpShowing;
+
+    private boolean entryOfferShown = false;
+    private boolean menSectionOfferShown = false;
+    private boolean womenSectionOfferShown = false;
+    private boolean checkOutPopUpShowing;
 
     public boolean isInsidePremise() {
         return isInsidePremise;
@@ -30,44 +32,36 @@ public class UserEntryCheck {
         this.isAtEntry = isAtEntry;
     }
 
-    public boolean isAtMenSection() {
-        return isAtMenSection;
+    public boolean isEntryOfferShown() {
+        return entryOfferShown;
     }
 
-    public void setAtMenSection(boolean isAtMenSection) {
-        this.isAtMenSection = isAtMenSection;
+    public void setEntryOfferShown(boolean entryOfferShown) {
+        this.entryOfferShown = entryOfferShown;
     }
 
-    public boolean isAtWomenSection() {
-        return isAtWomenSection;
+    public boolean isMenSectionOfferShown() {
+        return menSectionOfferShown;
     }
 
-    public void setAtWomenSection(boolean isAtWomenSection) {
-        this.isAtWomenSection = isAtWomenSection;
+    public void setMenSectionOfferShown(boolean menSectionOfferShown) {
+        this.menSectionOfferShown = menSectionOfferShown;
     }
 
-    public boolean isShowWelcomeMsg() {
-        return showWelcomeMsg;
+    public boolean isWomenSectionOfferShown() {
+        return womenSectionOfferShown;
     }
 
-    public void setShowWelcomeMsg(boolean showWelcomeMsg) {
-        this.showWelcomeMsg = showWelcomeMsg;
+    public void setWomenSectionOfferShown(boolean womenSectionOfferShown) {
+        this.womenSectionOfferShown = womenSectionOfferShown;
     }
 
-    public boolean isShowMenSectionMsg() {
-        return showMenSectionMsg;
+    public boolean isAnyPopUpShowing() {
+        return isAnyPopUpShowing;
     }
 
-    public void setShowMenSectionMsg(boolean showMenSectionMsg) {
-        this.showMenSectionMsg = showMenSectionMsg;
-    }
-
-    public boolean isShowWomenSectionMsg() {
-        return showWomenSectionMsg;
-    }
-
-    public void setShowWomenSectionMsg(boolean showWomenSectionMsg) {
-        this.showWomenSectionMsg = showWomenSectionMsg;
+    public void setAnyPopUpShowing(boolean isAnyPopUpShowing) {
+        this.isAnyPopUpShowing = isAnyPopUpShowing;
     }
 
     public static UserEntryCheck getInstance() {
@@ -78,5 +72,13 @@ public class UserEntryCheck {
     }
 
     private UserEntryCheck() {
+    }
+
+    public boolean isCheckOutPopUpShowing() {
+        return checkOutPopUpShowing;
+    }
+
+    public void setCheckOutPopUpShowing(boolean checkOutPopUpShowing) {
+        this.checkOutPopUpShowing = checkOutPopUpShowing;
     }
 }

@@ -222,10 +222,15 @@ public class LandingActivity extends BaseActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         String componentIdentifier = intent.getStringExtra("Section");
-        if (componentIdentifier != null)
+        if(componentIdentifier.equalsIgnoreCase("cart")){
+            loadFragment(new CartFragment(),componentIdentifier);
+        }
+        else if (componentIdentifier != null) {
             loadFragment(new OffersFragment(), componentIdentifier);
-        else
+        }
+        else {
             loadFragment(new ProductFragment(), null);
+        }
     }
 
     public void loadFragment(Fragment fragment, String componentIdentifier) {

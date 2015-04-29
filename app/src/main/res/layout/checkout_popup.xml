@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/popup_element"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="0dp"
     android:background="@color/white"
     android:clickable="true"
@@ -33,8 +33,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/productName"
             android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
-            android:text="liliput dress, watch, jacket"
+            android:layout_marginTop="10dp"
+            android:text="You have Items in your Cart!"
             android:textSize="@dimen/large"
             android:textColor="@color/material_grey_700"
             />
@@ -89,7 +89,6 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:text="Cancel"
                 android:textColor="@color/material_red_A200" />
-
 
         </LinearLayout>
     </RelativeLayout>

@@ -67,13 +67,12 @@ public class OffersFragment extends Fragment implements OfferListAdapter.ItemCli
     }
 
     private View getRootView(LayoutInflater inflater, ViewGroup container, View rootView) {
-        if (sectionIdentifier == null || sectionIdentifier.equals(getResources().getString(R.string.general_offer))) {
+
             rootView = inflater.inflate(R.layout.offers_fragment, container, false);
             mRecyclerView = (RecyclerView) rootView.findViewById(R.id.list);
             mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
             mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        }
         return rootView;
     }
 
