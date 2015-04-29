@@ -37,7 +37,7 @@ import java.util.List;
 public class LandingActivity extends BaseActivity {
     private DrawerLayout drawerLayout;
     private RecyclerView mRecyclerView;
-    private ProductListAdapter mProductListAdapter;
+    //private ProductListAdapter mProductListAdapter;
     private ListView mDrawerMenuList;
     private List<DrawerMenuItem> drawerMenuItemList;
 

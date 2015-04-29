@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.tavant.beaconretail.model.Offer;
+import com.tavant.beaconretail.model.Product;
 import com.tavant.beaconretail.model.ProductManager;
 import com.tavant.beaconretail.net.OfferJsonParser;
 import com.tavant.beaconretail.net.VolleySingleton;
@@ -60,7 +61,7 @@ public class OffersFragment extends Fragment implements OfferListAdapter.ItemCli
             getOffersFromServer();
         }
         else {
-            mProductListAdapter = new OfferListAdapter(ProductManager.getInstance().getGeneralOffer(), R.layout.offer_row,OffersFragment.this, getActivity());
+            mProductListAdapter = new OfferListAdapter(ProductManager.getInstance().getProducts(), R.layout.offer_row,OffersFragment.this, getActivity());
             mRecyclerView.setAdapter(mProductListAdapter);
         }
         return rootView;
@@ -83,7 +84,7 @@ public class OffersFragment extends Fragment implements OfferListAdapter.ItemCli
                 new OfferJsonParser(response);
 
                 if (sectionIdentifier == null || sectionIdentifier.equals(getResources().getString(R.string.general_offer))) {
-                mProductListAdapter = new OfferListAdapter(ProductManager.getInstance().getGeneralOffer(), R.layout.offer_row,OffersFragment.this, getActivity());
+                mProductListAdapter = new OfferListAdapter(ProductManager.getInstance().getProducts(), R.layout.offer_row,OffersFragment.this, getActivity());
                 mRecyclerView.setAdapter(mProductListAdapter);
                 }
 
@@ -97,9 +98,8 @@ public class OffersFragment extends Fragment implements OfferListAdapter.ItemCli
         VolleySingleton.getInstance(getActivity()).addToRequestQueue(jsonArrayRequest);
     }
 
-
     @Override
-    public void itemClicked(Offer offer) {
+    public void itemClicked(Product offer) {
 
     }
 }

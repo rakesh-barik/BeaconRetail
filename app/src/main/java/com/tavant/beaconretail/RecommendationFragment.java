@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.tavant.beaconretail.model.Offer;
+import com.tavant.beaconretail.model.Product;
 import com.tavant.beaconretail.model.ProductManager;
 import com.tavant.beaconretail.net.OfferJsonParser;
 import com.tavant.beaconretail.net.VolleySingleton;
@@ -52,7 +53,7 @@ public class RecommendationFragment extends Fragment implements OfferListAdapter
             getRecommendationsFromServer();
         }
         else {
-            mProductListAdapter = new OfferListAdapter(ProductManager.getInstance().getGeneralOffer(), R.layout.offer_row,RecommendationFragment.this, getActivity());
+            mProductListAdapter = new OfferListAdapter(ProductManager.getInstance().getProducts(), R.layout.offer_row,RecommendationFragment.this, getActivity());
             mRecyclerView.setAdapter(mProductListAdapter);
         }
 
@@ -92,10 +93,8 @@ public class RecommendationFragment extends Fragment implements OfferListAdapter
             public void onResponse(JSONArray response) {
                 new OfferJsonParser(response);
 
-                if (sectionIdentifier == null || sectionIdentifier.equals(getResources().getString(R.string.general_offer))) {
-                mProductListAdapter = new OfferListAdapter(ProductManager.getInstance().getGeneralOffer(), R.layout.recommendation_item,RecommendationFragment.this, getActivity());
+                mProductListAdapter = new OfferListAdapter(ProductManager.getInstance().getProducts(),R.layout.recommendation_item,RecommendationFragment.this,getActivity());
                 mRecyclerView.setAdapter(mProductListAdapter);
-                }
 
             }
         }, new Response.ErrorListener() {
@@ -107,9 +106,8 @@ public class RecommendationFragment extends Fragment implements OfferListAdapter
         VolleySingleton.getInstance(getActivity()).addToRequestQueue(jsonArrayRequest);
     }
 
-
     @Override
-    public void itemClicked(Offer offer) {
+    public void itemClicked(Product product) {
 
     }
 }
