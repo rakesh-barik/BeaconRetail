@@ -17,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -103,8 +105,10 @@ public abstract class BaseActivity extends ActionBarActivity {
     private static void checkoutOffers(final Dialog dialog, final Context displayContext) {
         dialog.setContentView(R.layout.checkout_popup);
 
-        List<Product> cartProducts = ProductManager.getInstance().getCartProducts();
-        String productNames = "";
+        final TextView tvPrice = (TextView)dialog.findViewById(R.id.totalAmount);
+        Animation scale = AnimationUtils.loadAnimation(displayContext, R.anim.scale);
+        tvPrice.clearAnimation();
+        tvPrice.setAnimation(scale);
 
         final Button walletButton = (Button) dialog.findViewById(R.id.wallet_button);
         walletButton.setOnClickListener(new View.OnClickListener() {
@@ -139,36 +143,37 @@ public abstract class BaseActivity extends ActionBarActivity {
         Product product = null;
         Offer offer = null;
 
+        TextView welcomeHeader = (TextView)dialog.findViewById(R.id.welcome_header);
         TextView productName = (TextView)dialog.findViewById(R.id.productName);
-
         ImageView offerImage = (ImageView)dialog.findViewById(R.id.productImage);
-        TextView offerDescription = (TextView)dialog.findViewById(R.id.offerDescription);
+        //TextView offerDescription = (TextView)dialog.findViewById(R.id.offerDescription);
         TextView offerPrice = (TextView)dialog.findViewById(R.id.offerPrice);
 
         if(section.equalsIgnoreCase(context.getResources().getString(R.string.women_section_offer))){
             product = ProductManager.getInstance().getSectionWiseProduct(womenBeaconId);
             offer = ProductManager.getInstance().getSectionWiseOffer(product.getOfferId());
 
+            welcomeHeader.setText("Welcome to Women's section");
             Picasso.with(context).load(product.getImageUrl()).into(offerImage);
             productName.setText(product.getName());
-            offerDescription.setText(offer.getOfferDescription());
-            offerPrice.setText(offer.getOfferHeading());
+
+            offerPrice.setText(offer.getOfferHeading().substring(0,7));
         }else if (section.equalsIgnoreCase(context.getResources().getString(R.string.men_section_offer))) {
             product = ProductManager.getInstance().getSectionWiseProduct(menBeaconId);
             offer = ProductManager.getInstance().getSectionWiseOffer(product.getOfferId());
-
+            welcomeHeader.setText("Welcome to Men's section");
             Picasso.with(context).load(product.getImageUrl()).into(offerImage);
             productName.setText(product.getName());
-            offerDescription.setText(offer.getOfferDescription());
-            offerPrice.setText(offer.getOfferHeading());
+
+            offerPrice.setText(offer.getOfferHeading().substring(0,7));
         }else if (section.equalsIgnoreCase(context.getResources().getString(R.string.general_offer))) {
             product = ProductManager.getInstance().getSectionWiseProduct(kidsBeaconId);
             offer = ProductManager.getInstance().getSectionWiseOffer(product.getOfferId());
-
+            welcomeHeader.setText("Welcome to the Store");
             Picasso.with(context).load(product.getImageUrl()).into(offerImage);
             productName.setText(product.getName());
-            offerDescription.setText(offer.getOfferDescription());
-            offerPrice.setText(offer.getOfferHeading());
+
+            offerPrice.setText(offer.getOfferHeading().substring(0,7));
         }
 
         final Button cancelButton = (Button)dialog.findViewById(R.id.cancel_button);

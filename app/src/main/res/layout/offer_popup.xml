@@ -3,7 +3,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/popup_element"
-    android:layout_width="match_parent"
+    android:layout_width="350dp"
     android:layout_height="wrap_content"
     android:layout_margin="0dp"
     android:background="@color/white"
@@ -17,20 +17,23 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/productName"
-            android:layout_width="wrap_content"
+            android:id="@+id/welcome_header"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_margin="6dp"
-            android:text="Nike Air One"
-            android:textColor="@android:color/black"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:background="@color/material_red_700"
+            android:text="Welcome to Men Section"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
             android:textSize="@dimen/large" />
 
         <TextView
             android:id="@+id/productType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/productName"
+            android:layout_below="@id/welcome_header"
             android:layout_centerHorizontal="true"
             android:layout_margin="3dp"
             android:text=""
@@ -39,11 +42,11 @@
 
         <ImageView
             android:id="@id/productImage"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_below="@id/productType"
             android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:scaleType="fitCenter"
             android:src="@drawable/offer_for_men" />
 
@@ -52,26 +55,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/productImage"
-            android:background="@color/material_red_700">
+            >
 
             <TextView
-                android:id="@+id/offerDescription"
+                android:id="@+id/productName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_centerHorizontal="true"
-                android:text="Pick Men's Shoes at"
-                android:textColor="@color/white"
+                android:text="Nike Blue Shoes"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/medium" />
 
             <TextView
                 android:id="@+id/offerPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/offerDescription"
+                android:layout_below="@id/productName"
                 android:layout_centerHorizontal="true"
                 android:text="50% off"
-                android:textColor="@color/white"
+                android:textColor="@color/primary"
                 android:textSize="@dimen/xx_large" />
         </RelativeLayout>
 
