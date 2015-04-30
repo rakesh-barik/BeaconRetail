@@ -99,7 +99,10 @@ public class OffersFragment extends Fragment implements OfferListAdapter.ItemCli
     }
 
     @Override
-    public void itemClicked(Product offer) {
-
+    public void itemClicked(Product offer,View v) {
+        View imageView = v.findViewById(R.id.productImage);
+        String url = (String) imageView.getTag();
+        ProductDetailActivity.launch(this,imageView,offer,url);
+        getActivity().overridePendingTransition(0, 0);
     }
 }

@@ -60,76 +60,6 @@ public class ProximityMarketing extends Application {
 
         final UserEntryCheck userEntryCheck = UserEntryCheck.getInstance();
 
-        /*beaconManager.setMonitoringListener(new MonitoringListener() {
-            @Override
-            public void onEnteredRegion(Region region, List<Beacon> beacons) {
-                for (Beacon beacon : beacons) {
-                    if (beacon.getMinor() == getResources().getInteger(R.integer.main_entrance_minor)) {
-                        if(userEntryCheck.isInsidePremise() && userEntryCheck.isAtEntry()){
-                            if(mFGCheck.isApplicationInForeground() && !userEntryCheck.isAnyPopUpShowing()){
-                                if(ProductManager.getInstance().getCartProducts() != null){
-                                    BaseActivity.showPopUp(getResources().getString(R.string.check_out),mFGCheck.getDisplayContext());
-                                    userEntryCheck.setAnyPopUpShowing(true);
-                                }else {
-                                    BaseActivity.showPopUp(getResources().getString(R.string.general_offer),mFGCheck.getDisplayContext());
-                                    userEntryCheck.setAnyPopUpShowing(true);
-                                }
-                            }else{
-                                if(ProductManager.getInstance().getCartProducts() != null){
-                                    postNotification(getString(R.string.exit_msg_with_cart), EXIT_NOTIFICATION_ID, null);
-                                }else {
-                                    postNotification(getString(R.string.exit_msg), EXIT_NOTIFICATION_ID, null);
-                                }
-                            }
-                        }
-                        userEntryCheck.setInsidePremise(true);
-                        userEntryCheck.setAtEntry(false);
-                        userEntryCheck.setAtMenSection(false);
-                        userEntryCheck.setAtWomenSection(false);
-                    } else if (beacon.getMinor() == getResources().getInteger(R.integer.entry_minor)) {
-                        if (userEntryCheck.isEntryOfferShown() && userEntryCheck.isInsidePremise() && !userEntryCheck.isAtEntry()) {
-                            if(mFGCheck.isApplicationInForeground() && !userEntryCheck.isAnyPopUpShowing()){
-                                BaseActivity.showPopUp(getResources().getString(R.string.general_offer),mFGCheck.getDisplayContext());
-                                userEntryCheck.setAnyPopUpShowing(true);
-                            }else{
-                                postNotification(getString(R.string.welcome_msg), ENTRY_NOTIFICATION_ID,getResources().getString(R.string.general_offer) );
-                            }
-                            userEntryCheck.setEntryOfferShown(false);
-                            userEntryCheck.setAtEntry(true);
-                        }
-                    } else if (beacon.getMinor() == getResources().getInteger(R.integer.men_minor)) {
-                        if (userEntryCheck.isMenSectionOfferShown() && userEntryCheck.isAtEntry()) {
-                            if(mFGCheck.isApplicationInForeground() && !userEntryCheck.isAnyPopUpShowing()){
-                                BaseActivity.showPopUp(getResources().getString(R.string.men_section_offer),mFGCheck.getDisplayContext());
-                                userEntryCheck.setAnyPopUpShowing(true);
-                            }else{
-                                postNotification(getString(R.string.men_section_msg), MEN_NOTIFICATION_ID,getResources().getString(R.string.men_section_offer));
-                            }
-                            userEntryCheck.setMenSectionOfferShown(false);
-                            userEntryCheck.setAtMenSection(true);
-                        }
-                    } else if (beacon.getMinor() == getResources().getInteger(R.integer.women_minor)) {
-                        if (userEntryCheck.isWomenSectionOfferShown() && userEntryCheck.isAtEntry()) {
-                            if(mFGCheck.isApplicationInForeground() && !userEntryCheck.isAnyPopUpShowing()){
-                                BaseActivity.showPopUp(getResources().getString(R.string.women_section_offer),mFGCheck.getDisplayContext());
-                                userEntryCheck.setAnyPopUpShowing(true);
-                            }else{
-                                postNotification(getString(R.string.women_section_msg), WOMEN_NOTIFICATION_ID,getResources().getString(R.string.women_section_offer));
-                            }
-                            userEntryCheck.setWomenSectionOfferShown(false);
-                            userEntryCheck.setAtWomenSection(true);
-                        }
-                    }
-                }
-
-            }
-
-            @Override
-            public void onExitedRegion(Region region) {
-
-            }
-        });*/
-
         beaconManager.setRangingListener(new BeaconManager.RangingListener() {
             @Override
             public void onBeaconsDiscovered(Region region, List<Beacon> beacons) {
@@ -146,7 +76,7 @@ public class ProximityMarketing extends Application {
 
                         } else if (!mFGCheck.isApplicationInForeground()) {
                             if (ProductManager.getInstance().getCartProducts() != null) {
-                                postNotification(getString(R.string.exit_msg_with_cart), EXIT_NOTIFICATION_ID, null);
+                                postNotification(getString(R.string.exit_msg_with_cart), EXIT_NOTIFICATION_ID, "cart");
                             } else {
                                 postNotification(getString(R.string.exit_msg), EXIT_NOTIFICATION_ID, null);
                             }
@@ -246,7 +176,7 @@ public class ProximityMarketing extends Application {
                 .setSmallIcon(R.drawable.retail_notif)
                 .setStyle(new Notification.BigPictureStyle()
                         .bigPicture(icon))
-                .setContentTitle("Tavant Retail")
+                .setContentTitle("Beacon Retail")
                 .setContentText(msg)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)

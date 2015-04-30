@@ -1,8 +1,8 @@
 package com.tavant.beaconretail;
 
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -106,8 +106,12 @@ public class RecommendationFragment extends Fragment implements OfferListAdapter
         VolleySingleton.getInstance(getActivity()).addToRequestQueue(jsonArrayRequest);
     }
 
-    @Override
-    public void itemClicked(Product product) {
 
+    @Override
+    public void itemClicked(Product offer, View v) {
+        View imageView = v.findViewById(R.id.productImage);
+        String url = (String) imageView.getTag();
+        ProductDetailActivity.launch(this,imageView,offer,url);
+        getActivity().overridePendingTransition(0, 0);
     }
 }

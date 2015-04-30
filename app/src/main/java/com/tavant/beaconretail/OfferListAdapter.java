@@ -59,7 +59,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         holder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemClickListener.itemClicked(product);
+                itemClickListener.itemClicked(product,v);
             }
         });
     }
@@ -82,7 +82,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
         private final TextView productPrice;
 
         public static ViewHolder newInstance(View parent){
-            ImageView productImage = (ImageView)parent.findViewById(R.id.offerImage);
+            ImageView productImage = (ImageView)parent.findViewById(R.id.productImage);
             //TextView productName = (TextView) parent.findViewById(R.id.offer_for);
             TextView productDescription = (TextView) parent.findViewById(R.id.offerDescription);
             TextView productSize = (TextView) parent.findViewById(R.id.productSize);
@@ -227,6 +227,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.View
     }*/
 
     public interface ItemClickListener {
-        void itemClicked(Product offer);
+        void itemClicked(Product offer,View v);
     }
 }

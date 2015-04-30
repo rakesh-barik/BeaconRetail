@@ -1,5 +1,7 @@
 package com.tavant.beaconretail;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -164,11 +166,39 @@ public class LandingActivity extends BaseActivity {
             case 4:
                 drawerLayout.closeDrawers();
                 break;
+            case 5:
+                logoutAlert();
+                drawerLayout.closeDrawers();
+                break;
 
             default:
                 break;
         }
     }
+
+    private void logoutAlert() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(LandingActivity.this);
+
+        alertDialog.setTitle("Logout"); // Sets title for your alertbox
+
+        alertDialog.setMessage("Are you sure you want to Logout ?"); // Message to be displayed on alertbox
+
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+                Toast.makeText(LandingActivity.this, "Successfully Logged Out", Toast.LENGTH_LONG).show();
+            }
+        });
+
+/* When negative (No/cancel) button is clicked*/
+        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alertDialog.show();
+    }
+
 
     private void toggleToolbarToDrawer() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);

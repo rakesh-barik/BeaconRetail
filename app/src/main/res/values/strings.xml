@@ -15,8 +15,8 @@
 
     <!--MESSAGES FOR NOTIFICATIONS-->
     <string name="beacon_uuid">b9407f30-f5f8-466e-aff9-25556b57fe6d</string>
-    <string name="welcome_msg">Welcome to Tavant Retail Store!</string>
-    <string name="exit_msg">Thanks for visiting Tavant Retail Store!</string>
+    <string name="welcome_msg">Welcome to Beacon Retail Store!</string>
+    <string name="exit_msg">Thanks for visiting Beacon Retail Store!</string>
     <string name="exit_msg_with_cart">You have items in cart.Would you like to purchase?</string>
     <string name="men_section_msg">We have exciting offers for you in Men section</string>
     <string name="women_section_msg">We have exciting offers for you in Women section</string>

@@ -17,7 +17,7 @@
         android:layout_gravity="bottom">
 
         <ImageView
-            android:id="@+id/offerImage"
+            android:id="@+id/productImage"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_margin="10dp"
@@ -30,7 +30,7 @@
             android:id="@+id/offerDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/offerImage"
+            android:layout_below="@id/productImage"
             android:layout_marginLeft="10dp"
             android:textColor="@android:color/primary_text_light"
             android:textSize="@dimen/small"
