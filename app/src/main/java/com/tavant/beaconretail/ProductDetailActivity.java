@@ -114,13 +114,13 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         if(id == android.R.id.home){
             NavUtils.navigateUpFromSameTask(this);
+        }else if(id == R.id.action_cart){
+            Intent i=new Intent(this, LandingActivity.class);
+            i.putExtra("Section", "cart");
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);

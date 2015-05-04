@@ -42,6 +42,7 @@ import java.util.List;
  */
 public abstract class BaseActivity extends ActionBarActivity {
 
+    private static TextView tvPrice = null;
     protected Toolbar toolbar;
 
     protected static boolean isVisible = false;
@@ -51,7 +52,6 @@ public abstract class BaseActivity extends ActionBarActivity {
     private static final int menBeaconId      = 1;
     private static final int womenBeaconId    = 2;
     private static final int kidsBeaconId     = 3;
-
 
 
     @Override
@@ -102,10 +102,15 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     }
 
+    public static void showPopUp(double totalAmount,final String section, Context displayContext){
+        showPopUp(section,displayContext);
+        tvPrice.setText("$" + String.valueOf(totalAmount));
+    }
+
     private static void checkoutOffers(final Dialog dialog, final Context displayContext) {
         dialog.setContentView(R.layout.checkout_popup);
 
-        final TextView tvPrice = (TextView)dialog.findViewById(R.id.totalAmount);
+        tvPrice = (TextView)dialog.findViewById(R.id.totalAmount);
         Animation scale = AnimationUtils.loadAnimation(displayContext, R.anim.scale);
         tvPrice.clearAnimation();
         tvPrice.setAnimation(scale);

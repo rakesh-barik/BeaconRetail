@@ -155,7 +155,7 @@
         android:layout_height="wrap_content"
         fab:fab_icon="@drawable/cart_fab"
         fab:fab_colorNormal="@color/primary"
-        fab:fab_colorPressed="@color/material_orange_500"
+        fab:fab_colorPressed="@color/primary_dark"
         android:layout_gravity="bottom|right"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="16dp"/>

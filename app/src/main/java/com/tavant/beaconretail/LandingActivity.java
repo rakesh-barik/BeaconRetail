@@ -55,9 +55,13 @@ public class LandingActivity extends BaseActivity {
         toggleToolbarToDrawer();
         String componentIdentifier = getIntent().getStringExtra("Section");
         //Finally has to handle multiple beacon ids and has to open respective components
-        if (componentIdentifier != null) {
+        if(componentIdentifier != null && componentIdentifier.equalsIgnoreCase("cart")){
+            loadFragment(new CartFragment(),componentIdentifier);
+        }
+        else if (componentIdentifier != null) {
             loadFragment(new OffersFragment(), componentIdentifier);
-        } else {
+        }
+        else {
             loadFragment(new ProductFragment(), null);
         }
         initializeMenu();
@@ -164,6 +168,7 @@ public class LandingActivity extends BaseActivity {
                 drawerLayout.closeDrawers();
                 break;
             case 4:
+                loadFragment(new MapFragment(),null);
                 drawerLayout.closeDrawers();
                 break;
             case 5:
@@ -243,6 +248,10 @@ public class LandingActivity extends BaseActivity {
                 return true;
             case R.id.action_search:
                 startActivity(new Intent(this, SearchActivity.class));
+                break;
+            case R.id.action_cart:
+                loadFragment(new CartFragment(),"cart");
+                break;
         }
 
         return super.onOptionsItemSelected(item);

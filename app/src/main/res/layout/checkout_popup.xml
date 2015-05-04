@@ -50,7 +50,7 @@
             android:layout_margin="16dp"
             android:text="Total Amount"
             android:textSize="@dimen/large"
-            android:textColor="@color/primary"
+            android:textColor="@color/material_grey_700"
             />
 
         <TextView
@@ -70,23 +70,20 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/totalAmount"
             android:orientation="vertical"
-            android:weightSum="100">
+            android:layout_marginTop="16dp"
+            >
 
             <Button
                 android:id="@+id/wallet_button"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="50"
+                android:layout_width="@dimen/buy_button_min_width"
+                android:layout_height="@dimen/buy_button_height"
                 android:layout_gravity="center_horizontal"
-                android:drawableLeft="@drawable/wallet"
-                android:background="?android:attr/selectableItemBackground"
-                android:text="Buy using Wallet"
-                android:textColor="@color/material_green_700" />
+                android:background="@drawable/google_wallet"
+             />
             <Button
                 android:id="@+id/cancel_button"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="50"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="?android:attr/selectableItemBackground"
                 android:text="Cancel"

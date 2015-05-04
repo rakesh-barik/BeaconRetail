@@ -7,34 +7,26 @@ import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.poliveira.parallaxrecyclerview.HeaderLayoutManagerFixed;
 import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
 import com.squareup.picasso.Picasso;
-import com.tavant.beaconretail.animator.SlideInOutBottomItemAnimator;
 import com.tavant.beaconretail.animator.SlideInOutLeftItemAnimator;
 import com.tavant.beaconretail.model.Product;
 import com.tavant.beaconretail.model.ProductManager;
-import com.tavant.beaconretail.net.ProductJsonParser;
-import com.tavant.beaconretail.net.VolleySingleton;
-
-import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,15 +40,46 @@ public class CartFragment extends Fragment implements ParallaxRecyclerAdapter.On
     private ParallaxRecyclerAdapter adapter;
     private Toolbar mToolbar;
     private BaseActivity activity;
-
+    private TextView tvTotalPrice;
+    double totalPrice = 0;
     public CartFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.action_search).setVisible(false).setEnabled(false);
+        menu.findItem(R.id.action_cart).setEnabled(false).setVisible(false);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_cart, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_pay:
+                BaseActivity.showPopUp(this.getTotalPrice(),getResources().getString(R.string.check_out),getActivity());
+        }
+        return super.onOptionsItemSelected(item);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_cart, container, false);
+        tvTotalPrice = (TextView)rootView.findViewById(R.id.totalPrice);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.list);
         mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("Cart");
@@ -68,7 +91,6 @@ public class CartFragment extends Fragment implements ParallaxRecyclerAdapter.On
         } else {
             createCardAdapter(ProductManager.getInstance().getCartProducts());
         }
-        //BaseActivity.showPopUp("checkout",getActivity());
 
         return rootView;
     }
@@ -91,7 +113,7 @@ public class CartFragment extends Fragment implements ParallaxRecyclerAdapter.On
         adapter = new ParallaxRecyclerAdapter(products);
         HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
         mRecyclerView.setLayoutManager(layoutManagerFixed);
-        View header = getActivity().getLayoutInflater().inflate(R.layout.header, mRecyclerView, false);
+        View header = getActivity().getLayoutInflater().inflate(R.layout.cart_header, mRecyclerView, false);
         layoutManagerFixed.setHeaderIncrementFixer(header);
         adapter.setShouldClipView(false);
         adapter.setParallaxHeader(header, mRecyclerView);
@@ -136,6 +158,21 @@ public class CartFragment extends Fragment implements ParallaxRecyclerAdapter.On
         });
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setItemAnimator(new SlideInOutLeftItemAnimator(mRecyclerView));
+        setTotalPrice();
+    }
+
+    private void setTotalPrice() {
+        totalPrice =  0;
+        List<Product> cartProducts = adapter.getData();
+        for(Product product : cartProducts){
+            double itemPrice = Double.valueOf(product.getPrice().substring(1));
+            totalPrice = totalPrice + itemPrice ;
+        }
+        this.tvTotalPrice.setText("$" + String.valueOf(totalPrice));
+    }
+
+    private double getTotalPrice(){
+        return totalPrice;
     }
 
 
@@ -168,6 +205,7 @@ public class CartFragment extends Fragment implements ParallaxRecyclerAdapter.On
             public void onClick(DialogInterface dialog, int which) {
                 adapter.removeItem(adapter.getData().get(position));
                 adapter.notifyDataSetChanged();
+                setTotalPrice();
                 dialog.dismiss();
             }
         });

@@ -30,4 +30,7 @@
     <dimen name="x_large">30sp</dimen>
     <dimen name="xx_large">60sp</dimen>
     <dimen name="product_list_top_margin">150dp</dimen>
+
+    <dimen name="buy_button_height">48dp</dimen>
+    <dimen name="buy_button_min_width">200dp</dimen>
 </resources>
