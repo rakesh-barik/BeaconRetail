@@ -44,10 +44,11 @@ public class ProductManager {
     public void setProducts(List<Product> productList) {
         if (products == null) {
             products = new ArrayList<>();
-
-            products.addAll(productList);
-            setSectionWiseProduct();
+        }else {
+            products.clear();
         }
+        products.addAll(productList);
+        setSectionWiseProduct();
     }
 
     public List<Product> getCartProducts() {
